@@ -8,7 +8,8 @@ import {
   set,
   get,
   onValue,
-  update
+  update,
+  child
 } from "firebase/database";
 
 const draftOrder = [
@@ -23,14 +24,28 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const dataRef = ref(db, "/");
-    onValue(dataRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
+    const dbRef = ref(db);
+
+    onValue(dbRef, async (snapshot) => {
+      const data = snapshot.val() || {};
+
+      // Auto-populate availableTeams from allTeams if it’s empty
+      if ((!data.availableTeams || data.availableTeams.length === 0) && data.allTeams) {
+        const updates = {
+          availableTeams: data.allTeams,
+          draftedTeams: [],
+          currentPickIndex: 0
+        };
+        await update(ref(db), updates);
+        setAvailableTeams(data.allTeams);
+        setDraftedTeams([]);
+        setCurrentPickIndex(0);
+      } else {
         setAvailableTeams(data.availableTeams || []);
         setDraftedTeams(data.draftedTeams || []);
         setCurrentPickIndex(data.currentPickIndex || 0);
       }
+
       setLoading(false);
     });
   }, []);
@@ -45,28 +60,32 @@ function App() {
 
   const handleDraft = (teamObj) => {
     if (!teamObj || currentPickIndex >= draftOrder.length * 3) return;
+
     const newDraft = {
       pick: currentPickIndex + 1,
       team: teamObj.team,
       odds: teamObj.odds,
       drafter: getCurrentPicker()
     };
+
     const updatedDrafted = [...draftedTeams, newDraft];
     const updatedAvailable = availableTeams.filter((t) => t.team !== teamObj.team);
+
     const updates = {
       draftedTeams: updatedDrafted,
       availableTeams: updatedAvailable,
       currentPickIndex: currentPickIndex + 1
     };
+
     update(ref(db), updates);
   };
 
   const resetDraft = async () => {
-    const fullTeams = await get(ref(db, "allTeams"));
-    if (fullTeams.exists()) {
+    const fullTeamsSnapshot = await get(child(ref(db), "allTeams"));
+    if (fullTeamsSnapshot.exists()) {
       const updates = {
         draftedTeams: [],
-        availableTeams: fullTeams.val(),
+        availableTeams: fullTeamsSnapshot.val(),
         currentPickIndex: 0
       };
       await set(ref(db), updates);
