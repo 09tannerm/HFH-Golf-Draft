@@ -26,28 +26,30 @@ function App() {
   useEffect(() => {
     const dbRef = ref(db);
 
-    onValue(dbRef, async (snapshot) => {
+    const unsubscribe = onValue(dbRef, async (snapshot) => {
       const data = snapshot.val() || {};
 
-      // Auto-populate availableTeams from allTeams if it’s empty
-      if ((!data.availableTeams || data.availableTeams.length === 0) && data.allTeams) {
-        const updates = {
+      if (data.availableTeams && data.availableTeams.length > 0) {
+        setAvailableTeams(data.availableTeams);
+        setDraftedTeams(data.draftedTeams || []);
+        setCurrentPickIndex(data.currentPickIndex || 0);
+      } else if (data.allTeams) {
+        // Force re-initialize from allTeams
+        const fallback = {
           availableTeams: data.allTeams,
           draftedTeams: [],
           currentPickIndex: 0
         };
-        await update(ref(db), updates);
-        setAvailableTeams(data.allTeams);
+        await set(ref(db), fallback);
+        setAvailableTeams(fallback.availableTeams);
         setDraftedTeams([]);
         setCurrentPickIndex(0);
-      } else {
-        setAvailableTeams(data.availableTeams || []);
-        setDraftedTeams(data.draftedTeams || []);
-        setCurrentPickIndex(data.currentPickIndex || 0);
       }
 
       setLoading(false);
     });
+
+    return () => unsubscribe();
   }, []);
 
   const getCurrentPicker = () => {
