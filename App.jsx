@@ -34,12 +34,12 @@ function App() {
         setDraftedTeams(data.draftedTeams || []);
         setCurrentPickIndex(data.currentPickIndex || 0);
       } else if (data.allTeams) {
-        // Force re-initialize from allTeams
         const fallback = {
           availableTeams: data.allTeams,
           draftedTeams: [],
           currentPickIndex: 0
         };
+        console.log("Auto-setting from allTeams fallback", fallback);
         await set(ref(db), fallback);
         setAvailableTeams(fallback.availableTeams);
         setDraftedTeams([]);
@@ -83,14 +83,19 @@ function App() {
   };
 
   const resetDraft = async () => {
+    console.log("Reset Draft clicked");
     const fullTeamsSnapshot = await get(child(ref(db), "allTeams"));
     if (fullTeamsSnapshot.exists()) {
+      console.log("Found allTeams:", fullTeamsSnapshot.val());
       const updates = {
         draftedTeams: [],
         availableTeams: fullTeamsSnapshot.val(),
         currentPickIndex: 0
       };
       await set(ref(db), updates);
+      console.log("Draft reset successful:", updates);
+    } else {
+      console.warn("No allTeams found in Firebase!");
     }
   };
 
