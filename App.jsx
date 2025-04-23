@@ -141,7 +141,38 @@ function App() {
           </div>
         ))}
       </div>
-    </div>
+    
+      {draftComplete && (
+        <div className="final-results">
+          <h2>Final Draft Summary</h2>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign: "left", padding: "6px" }}>Drafter</th>
+                {Array.from({ length: picksPerTeam }, (_, i) => (
+                  <th key={i} style={{ textAlign: "left", padding: "6px" }}>Pick {i + 1}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {draftOrder.map((drafter) => {
+                const picks = draftedTeams.filter(e => e.drafter === drafter);
+                return (
+                  <tr key={drafter}>
+                    <td style={{ padding: "6px", fontWeight: "bold" }}>{drafter}</td>
+                    {Array.from({ length: picksPerTeam }, (_, i) => (
+                      <td key={i} style={{ padding: "6px" }}>
+                        {picks[i] ? `${picks[i].team} (+${picks[i].odds})` : ""}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+</div>
   );
 }
 
