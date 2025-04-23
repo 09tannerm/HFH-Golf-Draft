@@ -7,49 +7,56 @@ import {
   ref,
   set,
   get,
-  onValue,
   update,
-  child
+  onValue
 } from "firebase/database";
 
-const draftOrder = [
-  "Connor Cremers", "Connor Woods", "Tyler Chase", "Kevan Elcock", "Trevor Elcock", "Brett Smith",
-  "Ryne Borden", "Jack Berry", "Tyler Ehlers", "Tanner Morris", "David Johnson", "Kyle Serrano"
-];
-
 function App() {
+  const [eventName, setEventName] = useState("");
+  const [eventType, setEventType] = useState("regular");
   const [availableTeams, setAvailableTeams] = useState([]);
   const [draftedTeams, setDraftedTeams] = useState([]);
   const [currentPickIndex, setCurrentPickIndex] = useState(0);
+  const [draftOrder, setDraftOrder] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const picksPerTeam = eventType === "major" ? 5 : 3;
+
   useEffect(() => {
-    const dbRef = ref(db);
+    const loadFromConfigAndFirebase = async () => {
+      try {
+        const res = await fetch("/tournament_config.json");
+        const config = await res.json();
+        setEventName(config.eventName);
+        setDraftOrder(config.draftOrder);
+        setEventType(config.type || "regular");
 
-    const unsubscribe = onValue(dbRef, async (snapshot) => {
-      const data = snapshot.val() || {};
-
-      if (data.availableTeams && data.availableTeams.length > 0) {
-        setAvailableTeams(data.availableTeams);
-        setDraftedTeams(data.draftedTeams || []);
-        setCurrentPickIndex(data.currentPickIndex || 0);
-      } else if (data.allTeams) {
-        const fallback = {
-          availableTeams: data.allTeams,
-          draftedTeams: [],
-          currentPickIndex: 0
-        };
-        console.log("Auto-setting from allTeams fallback", fallback);
-        await set(ref(db), fallback);
-        setAvailableTeams(fallback.availableTeams);
-        setDraftedTeams([]);
-        setCurrentPickIndex(0);
+        const snapshot = await get(ref(db));
+        const data = snapshot.val() || {};
+        if (!data.availableTeams || data.availableTeams.length === 0) {
+          await set(ref(db), {
+            availableTeams: config.teams,
+            draftedTeams: [],
+            currentPickIndex: 0
+          });
+        }
+      } catch (err) {
+        console.error("Error loading config or Firebase:", err);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setLoading(false);
+    loadFromConfigAndFirebase();
+
+    const unsub = onValue(ref(db), (snapshot) => {
+      const data = snapshot.val() || {};
+      setAvailableTeams(data.availableTeams || []);
+      setDraftedTeams(data.draftedTeams || []);
+      setCurrentPickIndex(data.currentPickIndex || 0);
     });
 
-    return () => unsubscribe();
+    return () => unsub();
   }, []);
 
   const getCurrentPicker = () => {
@@ -61,7 +68,7 @@ function App() {
   };
 
   const handleDraft = (teamObj) => {
-    if (!teamObj || currentPickIndex >= draftOrder.length * 3) return;
+    if (!teamObj || currentPickIndex >= draftOrder.length * picksPerTeam) return;
 
     const newDraft = {
       pick: currentPickIndex + 1,
@@ -83,33 +90,35 @@ function App() {
   };
 
   const resetDraft = async () => {
-    console.log("Reset Draft clicked");
-    const fullTeamsSnapshot = await get(child(ref(db), "allTeams"));
-    if (fullTeamsSnapshot.exists()) {
-      console.log("Found allTeams:", fullTeamsSnapshot.val());
-      const updates = {
+    try {
+      const res = await fetch("/tournament_config.json");
+      const config = await res.json();
+      setEventName(config.eventName);
+      setDraftOrder(config.draftOrder);
+      setEventType(config.type || "regular");
+      await set(ref(db), {
+        availableTeams: config.teams,
         draftedTeams: [],
-        availableTeams: fullTeamsSnapshot.val(),
         currentPickIndex: 0
-      };
-      await set(ref(db), updates);
-      console.log("Draft reset successful:", updates);
-    } else {
-      console.warn("No allTeams found in Firebase!");
+      });
+    } catch (err) {
+      console.error("Failed to reset draft:", err);
     }
   };
 
   if (loading) return <div>Loading...</div>;
 
+  const draftComplete = currentPickIndex >= draftOrder.length * picksPerTeam;
+
   return (
     <div className="app">
-      <h1>HFH Golf Draft</h1>
+      <h1>HFH Draft: {eventName}</h1>
       <button onClick={resetDraft}>🔁 Reset Draft</button>
       <h2>Available Teams</h2>
       <div className="current-picker">
-        {currentPickIndex < draftOrder.length * 3
-          ? <>⛳️ On the clock: <span>{getCurrentPicker()}</span></>
-          : "✅ Draft Complete"}
+        {draftComplete
+          ? "✅ Draft Complete"
+          : <>⛳️ On the clock: <span>{getCurrentPicker()}</span></>}
       </div>
       <div className="team-list">
         {availableTeams.map((teamObj, idx) => (
@@ -117,7 +126,7 @@ function App() {
             key={idx}
             className="team-button"
             onClick={() => handleDraft(teamObj)}
-            disabled={currentPickIndex >= draftOrder.length * 3}
+            disabled={draftComplete}
           >
             {teamObj.team} <span style={{ fontSize: "0.8em" }}>+{teamObj.odds}</span>
           </button>
@@ -131,24 +140,6 @@ function App() {
             <span style={{ fontSize: "0.8em" }}>+{entry.odds}</span>
           </div>
         ))}
-        {currentPickIndex >= draftOrder.length * 3 && (
-          <div className="final-results">
-            <h2>Final Draft Results</h2>
-            {draftOrder.map((drafter) => {
-              const picks = draftedTeams.filter(e => e.drafter === drafter);
-              return (
-                <div key={drafter} className="drafter-summary">
-                  <h3>{drafter}</h3>
-                  <ul>
-                    {picks.map((entry, i) => (
-                      <li key={i}>{entry.team} <span style={{ fontSize: "0.8em" }}>+{entry.odds}</span></li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        )}
       </div>
     </div>
   );
