@@ -9,6 +9,7 @@ function App() {
   const [redoStack, setRedoStack] = useState([]);
   const [currentPickIndex, setCurrentPickIndex] = useState(0);
   const [round, setRound] = useState(1);
+  const [draftComplete, setDraftComplete] = useState(false);
 
   useEffect(() => {
     fetch('/tournament_config.json')
@@ -23,8 +24,13 @@ function App() {
   const handleDraftTeam = (team) => {
     if (draftedTeams.find((t) => t.team === team.team)) return;
 
-    setDraftedTeams((prev) => [...prev, { ...team, drafter: draftOrder[currentPickIndex], roundDrafted: round }]);
+    const updatedDraftedTeams = [...draftedTeams, { ...team, drafter: draftOrder[currentPickIndex], roundDrafted: round }];
+    setDraftedTeams(updatedDraftedTeams);
     setRedoStack([]);
+
+    if (updatedDraftedTeams.length === teams.length) {
+      setDraftComplete(true);
+    }
 
     if (round % 2 === 1) {
       if (currentPickIndex + 1 < draftOrder.length) {
@@ -48,6 +54,7 @@ function App() {
     const lastPick = draftedTeams[draftedTeams.length - 1];
     setDraftedTeams(prev => prev.slice(0, -1));
     setRedoStack(prev => [...prev, lastPick]);
+    setDraftComplete(false);
 
     if (round % 2 === 1) {
       if (currentPickIndex - 1 >= 0) {
@@ -69,8 +76,13 @@ function App() {
   const handleRedoPick = () => {
     if (redoStack.length === 0) return;
     const nextPick = redoStack[redoStack.length - 1];
-    setDraftedTeams(prev => [...prev, nextPick]);
+    const updatedDraftedTeams = [...draftedTeams, nextPick];
+    setDraftedTeams(updatedDraftedTeams);
     setRedoStack(prev => prev.slice(0, -1));
+
+    if (updatedDraftedTeams.length === teams.length) {
+      setDraftComplete(true);
+    }
 
     if (round % 2 === 1) {
       if (currentPickIndex + 1 < draftOrder.length) {
@@ -98,10 +110,10 @@ function App() {
       setRedoStack([]);
       setCurrentPickIndex(0);
       setRound(1);
+      setDraftComplete(false);
     }
   };
 
-  // Group drafted teams by drafter
   const draftedByDrafter = {};
   draftedTeams.forEach((pick) => {
     if (!draftedByDrafter[pick.drafter]) {
@@ -113,6 +125,12 @@ function App() {
   return (
     <div className="app">
       <h1>🏌️‍♂️ HFH Golf Draft 🏆</h1>
+
+      {draftComplete && (
+        <div className="draft-complete-banner">
+          🎉 Draft Complete! 🏆
+        </div>
+      )}
 
       <div className="button-group">
         <button className="reset-button" onClick={handleResetDraft}>Reset Draft</button>
