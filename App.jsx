@@ -44,15 +44,22 @@ function App() {
   const isDrafted = (teamName) => draftedTeams.some((t) => t.team === teamName);
 
   const handleResetDraft = () => {
-    setDraftedTeams([]);
-    setCurrentPickIndex(0);
-    setRound(1);
+    const confirmed = window.confirm('Are you sure you want to reset the draft?');
+    if (confirmed) {
+      setDraftedTeams([]);
+      setCurrentPickIndex(0);
+      setRound(1);
+    }
   };
 
   return (
     <div className="app">
       <h1>HFH Golf Draft</h1>
-      <button className="reset-button" onClick={handleResetDraft}>Reset Draft</button>
+
+      <button className="reset-button" onClick={handleResetDraft}>
+        Reset Draft
+      </button>
+
       <h2>Round {round} — Drafting: {draftOrder[currentPickIndex] || 'Draft Complete!'}</h2>
 
       <div className="team-list">
