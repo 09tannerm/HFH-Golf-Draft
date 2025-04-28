@@ -6,6 +6,7 @@ function App() {
   const [draftOrder, setDraftOrder] = useState([]);
   const [teams, setTeams] = useState([]);
   const [draftedTeams, setDraftedTeams] = useState([]);
+  const [redoStack, setRedoStack] = useState([]);
   const [currentPickIndex, setCurrentPickIndex] = useState(0);
   const [round, setRound] = useState(1);
 
@@ -23,6 +24,53 @@ function App() {
     if (draftedTeams.find((t) => t.team === team.team)) return;
 
     setDraftedTeams((prev) => [...prev, { ...team, drafter: draftOrder[currentPickIndex], roundDrafted: round }]);
+    setRedoStack([]);
+
+    if (round % 2 === 1) {
+      if (currentPickIndex + 1 < draftOrder.length) {
+        setCurrentPickIndex(currentPickIndex + 1);
+      } else {
+        setRound(round + 1);
+        setCurrentPickIndex(draftOrder.length - 1);
+      }
+    } else {
+      if (currentPickIndex - 1 >= 0) {
+        setCurrentPickIndex(currentPickIndex - 1);
+      } else {
+        setRound(round + 1);
+        setCurrentPickIndex(0);
+      }
+    }
+  };
+
+  const handleUndoPick = () => {
+    if (draftedTeams.length === 0) return;
+    const lastPick = draftedTeams[draftedTeams.length - 1];
+    setDraftedTeams(prev => prev.slice(0, -1));
+    setRedoStack(prev => [...prev, lastPick]);
+
+    if (round % 2 === 1) {
+      if (currentPickIndex - 1 >= 0) {
+        setCurrentPickIndex(currentPickIndex - 1);
+      } else {
+        setRound(round - 1);
+        setCurrentPickIndex(draftOrder.length - 1);
+      }
+    } else {
+      if (currentPickIndex + 1 < draftOrder.length) {
+        setCurrentPickIndex(currentPickIndex + 1);
+      } else {
+        setRound(round - 1);
+        setCurrentPickIndex(0);
+      }
+    }
+  };
+
+  const handleRedoPick = () => {
+    if (redoStack.length === 0) return;
+    const nextPick = redoStack[redoStack.length - 1];
+    setDraftedTeams(prev => [...prev, nextPick]);
+    setRedoStack(prev => prev.slice(0, -1));
 
     if (round % 2 === 1) {
       if (currentPickIndex + 1 < draftOrder.length) {
@@ -47,6 +95,7 @@ function App() {
     const confirmed = window.confirm('Are you sure you want to reset the draft?');
     if (confirmed) {
       setDraftedTeams([]);
+      setRedoStack([]);
       setCurrentPickIndex(0);
       setRound(1);
     }
@@ -65,9 +114,11 @@ function App() {
     <div className="app">
       <h1>🏌️‍♂️ HFH Golf Draft 🏆</h1>
 
-      <button className="reset-button" onClick={handleResetDraft}>
-        Reset Draft
-      </button>
+      <div className="button-group">
+        <button className="reset-button" onClick={handleResetDraft}>Reset Draft</button>
+        <button className="undo-button" onClick={handleUndoPick}>Undo Pick</button>
+        <button className="redo-button" onClick={handleRedoPick}>Redo Pick</button>
+      </div>
 
       <h2>
         Round {round} — {draftOrder[currentPickIndex] ? (
