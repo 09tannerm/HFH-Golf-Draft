@@ -11,6 +11,7 @@ function App() {
   const [currentPickIndex, setCurrentPickIndex] = useState(0);
   const [round, setRound] = useState(1);
   const [draftComplete, setDraftComplete] = useState(false);
+  const [eventName, setEventName] = useState("This Week's Event");
 
   useEffect(() => {
     fetch('/tournament_config.json')
@@ -18,6 +19,7 @@ function App() {
       .then((data) => {
         setDraftOrder(data.draftOrder);
         setTeams(data.teams);
+        setEventName(data.eventName || "This Week's Event");
       })
       .catch((err) => console.error('Error loading config:', err));
   }, []);
@@ -103,6 +105,7 @@ function App() {
   return (
     <div className="app">
       <h1>🏌️‍♂️ HFH Golf Draft 🏆</h1>
+      <h2>{eventName}</h2>
 
       {draftComplete && (
         <div className="draft-complete-banner">
