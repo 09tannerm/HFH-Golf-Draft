@@ -22,7 +22,7 @@ function App() {
   const handleDraftTeam = (team) => {
     if (draftedTeams.find((t) => t.team === team.team)) return;
 
-    setDraftedTeams((prev) => [...prev, { ...team, drafter: draftOrder[currentPickIndex] }]);
+    setDraftedTeams((prev) => [...prev, { ...team, drafter: draftOrder[currentPickIndex], roundDrafted: round }]);
 
     if (round % 2 === 1) {
       if (currentPickIndex + 1 < draftOrder.length) {
@@ -52,6 +52,15 @@ function App() {
     }
   };
 
+  // Group drafted teams by drafter
+  const draftedByDrafter = {};
+  draftedTeams.forEach((pick) => {
+    if (!draftedByDrafter[pick.drafter]) {
+      draftedByDrafter[pick.drafter] = [];
+    }
+    draftedByDrafter[pick.drafter].push(pick);
+  });
+
   return (
     <div className="app">
       <h1>HFH Golf Draft</h1>
@@ -77,14 +86,33 @@ function App() {
           ))}
       </div>
 
-      <h2>Draft Board</h2>
-      <div className="draft-board">
-        {draftedTeams.map((pick, idx) => (
-          <div key={idx} className="drafted-team">
-            <strong>Pick {idx + 1}:</strong> {pick.drafter} selected {pick.team} ({pick.odds})
-          </div>
-        ))}
-      </div>
+      <h2>Final Draft Summary</h2>
+      <table className="draft-summary">
+        <thead>
+          <tr>
+            <th>Drafter</th>
+            <th>Pick 1</th>
+            <th>Pick 2</th>
+            <th>Pick 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          {draftOrder.map((drafter) => (
+            <tr key={drafter}>
+              <td><strong>{drafter}</strong></td>
+              {[0, 1, 2].map((pickIdx) => (
+                <td key={pickIdx}>
+                  {draftedByDrafter[drafter] && draftedByDrafter[drafter][pickIdx] ? (
+                    `${draftedByDrafter[drafter][pickIdx].team} (+${draftedByDrafter[drafter][pickIdx].odds})`
+                  ) : (
+                    ''
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
