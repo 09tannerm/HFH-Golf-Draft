@@ -117,10 +117,12 @@ function App() {
       </div>
 
       <h2>
-        Round {round} — {draftOrder[currentPickIndex] ? (
-          <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span>
-        ) : (
+        {draftComplete ? (
           'Draft Complete!'
+        ) : (
+          <>
+            Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span>
+          </>
         )}
       </h2>
 
