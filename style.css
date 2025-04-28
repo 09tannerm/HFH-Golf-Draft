@@ -61,12 +61,17 @@ h1, h2 {
   border-bottom: 1px solid #ccc;
 }
 
-/* Reset button styling */
-.reset-button {
-  display: block;
-  margin: 10px auto 20px;
+/* Button group styling */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.reset-button, .undo-button, .redo-button {
   padding: 10px 20px;
-  background-color: #ff4d4d;
+  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 10px;
@@ -75,8 +80,8 @@ h1, h2 {
   transition: background-color 0.3s;
 }
 
-.reset-button:hover {
-  background-color: #cc0000;
+.reset-button:hover, .undo-button:hover, .redo-button:hover {
+  background-color: #388e3c;
 }
 
 /* Draft summary table styling */
