@@ -69,7 +69,8 @@ h1, h2 {
   margin-bottom: 20px;
 }
 
-.reset-button, .undo-button, .redo-button {
+/* Style for Undo and Redo buttons (green) */
+.undo-button, .redo-button {
   padding: 10px 20px;
   background-color: #4CAF50;
   color: white;
@@ -80,8 +81,24 @@ h1, h2 {
   transition: background-color 0.3s;
 }
 
-.reset-button:hover, .undo-button:hover, .redo-button:hover {
+.undo-button:hover, .redo-button:hover {
   background-color: #388e3c;
+}
+
+/* Style for Reset button (red) */
+.reset-button {
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+  background-color: #cc0000;
 }
 
 /* Draft summary table styling */
