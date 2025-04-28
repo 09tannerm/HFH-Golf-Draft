@@ -7,9 +7,9 @@ function App() {
   const [teams, setTeams] = useState([]);
   const [draftedTeams, setDraftedTeams] = useState([]);
   const [currentPickIndex, setCurrentPickIndex] = useState(0);
+  const [round, setRound] = useState(1);
 
   useEffect(() => {
-    // Load tournament_config.json
     fetch('/tournament_config.json')
       .then((res) => res.json())
       .then((data) => {
@@ -20,33 +20,47 @@ function App() {
   }, []);
 
   const handleDraftTeam = (team) => {
-    if (draftedTeams.find((t) => t.team === team.team)) return; // already drafted
+    if (draftedTeams.find((t) => t.team === team.team)) return;
 
     setDraftedTeams((prev) => [...prev, { ...team, drafter: draftOrder[currentPickIndex] }]);
-    setCurrentPickIndex((prev) => prev + 1);
 
-    // TODO: Save pick to Firebase if needed
+    if (round % 2 === 1) {
+      if (currentPickIndex + 1 < draftOrder.length) {
+        setCurrentPickIndex(currentPickIndex + 1);
+      } else {
+        setRound(round + 1);
+        setCurrentPickIndex(draftOrder.length - 1);
+      }
+    } else {
+      if (currentPickIndex - 1 >= 0) {
+        setCurrentPickIndex(currentPickIndex - 1);
+      } else {
+        setRound(round + 1);
+        setCurrentPickIndex(0);
+      }
+    }
   };
+
+  const isDrafted = (teamName) => draftedTeams.some((t) => t.team === teamName);
 
   return (
     <div className="app">
       <h1>HFH Golf Draft</h1>
-      <h2>Drafting: {draftOrder[currentPickIndex] || 'Draft Complete!'}</h2>
+      <h2>Round {round} — Drafting: {draftOrder[currentPickIndex] || 'Draft Complete!'}</h2>
 
       <div className="team-list">
-        {teams.map((team, idx) => {
-          const alreadyDrafted = draftedTeams.find((t) => t.team === team.team);
-          return (
+        {teams
+          .filter((team) => !isDrafted(team.team))
+          .map((team, idx) => (
             <button
               key={idx}
               className="team-button"
               onClick={() => handleDraftTeam(team)}
-              disabled={!!alreadyDrafted || currentPickIndex >= draftOrder.length}
+              disabled={currentPickIndex >= draftOrder.length}
             >
               {team.team} ({team.odds})
             </button>
-          );
-        })}
+          ))}
       </div>
 
       <h2>Draft Board</h2>
