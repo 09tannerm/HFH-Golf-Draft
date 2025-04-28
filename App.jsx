@@ -138,7 +138,7 @@ function App() {
               onClick={() => handleDraftTeam(team)}
               disabled={currentPickIndex >= draftOrder.length}
             >
-              {team.team} ({team.odds})
+              {team.team} (+{team.odds})
             </button>
           ))}
       </div>
