@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
+import { doc, setDoc, onSnapshot } from 'firebase/firestore';
 import './style.css';
 
 function App() {
@@ -21,98 +22,75 @@ function App() {
       .catch((err) => console.error('Error loading config:', err));
   }, []);
 
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, 'draftState', 'current'), (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setDraftedTeams(data.draftedTeams || []);
+      }
+    });
+
+    return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    if (draftedTeams.length > 0) {
+      const lastPick = draftedTeams[draftedTeams.length - 1];
+      const pickIndex = draftOrder.findIndex(d => d === lastPick.drafter);
+      const totalPicks = draftedTeams.length;
+      const roundsCompleted = Math.floor(totalPicks / draftOrder.length);
+      const isEvenRound = roundsCompleted % 2 === 1;
+
+      if (isEvenRound) {
+        setCurrentPickIndex(draftOrder.length - (totalPicks % draftOrder.length) - 1);
+      } else {
+        setCurrentPickIndex(totalPicks % draftOrder.length);
+      }
+      setRound(roundsCompleted + 1);
+    } else {
+      setCurrentPickIndex(0);
+      setRound(1);
+    }
+
+    setDraftComplete(draftedTeams.length === draftOrder.length * 3);
+  }, [draftedTeams, draftOrder]);
+
+  const updateDraftState = async (newDraftedTeams) => {
+    await setDoc(doc(db, 'draftState', 'current'), { draftedTeams: newDraftedTeams });
+  };
+
   const handleDraftTeam = (team) => {
     if (draftedTeams.find((t) => t.team === team.team)) return;
 
     const updatedDraftedTeams = [...draftedTeams, { ...team, drafter: draftOrder[currentPickIndex], roundDrafted: round }];
-    setDraftedTeams(updatedDraftedTeams);
+    updateDraftState(updatedDraftedTeams);
     setRedoStack([]);
-
-    if (updatedDraftedTeams.length === teams.length) {
-      setDraftComplete(true);
-    }
-
-    if (round % 2 === 1) {
-      if (currentPickIndex + 1 < draftOrder.length) {
-        setCurrentPickIndex(currentPickIndex + 1);
-      } else {
-        setRound(round + 1);
-        setCurrentPickIndex(draftOrder.length - 1);
-      }
-    } else {
-      if (currentPickIndex - 1 >= 0) {
-        setCurrentPickIndex(currentPickIndex - 1);
-      } else {
-        setRound(round + 1);
-        setCurrentPickIndex(0);
-      }
-    }
   };
 
   const handleUndoPick = () => {
     if (draftedTeams.length === 0) return;
-    const lastPick = draftedTeams[draftedTeams.length - 1];
-    setDraftedTeams(prev => prev.slice(0, -1));
-    setRedoStack(prev => [...prev, lastPick]);
-    setDraftComplete(false);
-
-    if (round % 2 === 1) {
-      if (currentPickIndex - 1 >= 0) {
-        setCurrentPickIndex(currentPickIndex - 1);
-      } else {
-        setRound(round - 1);
-        setCurrentPickIndex(draftOrder.length - 1);
-      }
-    } else {
-      if (currentPickIndex + 1 < draftOrder.length) {
-        setCurrentPickIndex(currentPickIndex + 1);
-      } else {
-        setRound(round - 1);
-        setCurrentPickIndex(0);
-      }
-    }
+    const updatedDraftedTeams = draftedTeams.slice(0, -1);
+    updateDraftState(updatedDraftedTeams);
+    setRedoStack(prev => [...prev, draftedTeams[draftedTeams.length - 1]]);
   };
 
   const handleRedoPick = () => {
     if (redoStack.length === 0) return;
     const nextPick = redoStack[redoStack.length - 1];
     const updatedDraftedTeams = [...draftedTeams, nextPick];
-    setDraftedTeams(updatedDraftedTeams);
+    updateDraftState(updatedDraftedTeams);
     setRedoStack(prev => prev.slice(0, -1));
-
-    if (updatedDraftedTeams.length === teams.length) {
-      setDraftComplete(true);
-    }
-
-    if (round % 2 === 1) {
-      if (currentPickIndex + 1 < draftOrder.length) {
-        setCurrentPickIndex(currentPickIndex + 1);
-      } else {
-        setRound(round + 1);
-        setCurrentPickIndex(draftOrder.length - 1);
-      }
-    } else {
-      if (currentPickIndex - 1 >= 0) {
-        setCurrentPickIndex(currentPickIndex - 1);
-      } else {
-        setRound(round + 1);
-        setCurrentPickIndex(0);
-      }
-    }
   };
-
-  const isDrafted = (teamName) => draftedTeams.some((t) => t.team === teamName);
 
   const handleResetDraft = () => {
     const confirmed = window.confirm('Are you sure you want to reset the draft?');
     if (confirmed) {
-      setDraftedTeams([]);
+      updateDraftState([]);
       setRedoStack([]);
-      setCurrentPickIndex(0);
-      setRound(1);
-      setDraftComplete(false);
     }
   };
+
+  const isDrafted = (teamName) => draftedTeams.some((t) => t.team === teamName);
 
   const draftedByDrafter = {};
   draftedTeams.forEach((pick) => {
@@ -146,7 +124,7 @@ function App() {
         )}
       </h2>
 
-      <div className="team-list">
+      <div className={`team-list ${draftComplete ? 'hidden' : ''}`}>
         {teams
           .filter((team) => !isDrafted(team.team))
           .map((team, idx) => (
