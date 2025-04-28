@@ -1,4 +1,4 @@
-/* Golf Fantasy Draft App - Style.css */
+/* Updated style.css including event-name class */
 
 body {
   font-family: 'Poppins', Arial, sans-serif;
@@ -19,7 +19,14 @@ body {
 
 h1, h2 {
   text-align: center;
-  color: #4CAF50;
+}
+
+.event-name {
+  text-align: center;
+  color: #2e7d32;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .team-list {
@@ -28,6 +35,7 @@ h1, h2 {
   gap: 10px;
   justify-content: center;
   margin-bottom: 20px;
+  transition: opacity 0.5s ease-out;
 }
 
 .team-button {
@@ -63,7 +71,6 @@ h1, h2 {
   border-bottom: 1px solid #ccc;
 }
 
-/* Button group styling */
 .button-group {
   display: flex;
   justify-content: center;
@@ -71,7 +78,6 @@ h1, h2 {
   margin-bottom: 20px;
 }
 
-/* Style for Undo and Redo buttons (green) */
 .undo-button, .redo-button {
   padding: 10px 20px;
   background-color: #4CAF50;
@@ -87,7 +93,6 @@ h1, h2 {
   background-color: #388e3c;
 }
 
-/* Style for Reset button (red) */
 .reset-button {
   padding: 10px 20px;
   background-color: #ff4d4d;
@@ -103,7 +108,6 @@ h1, h2 {
   background-color: #cc0000;
 }
 
-/* Draft summary table styling */
 .draft-summary {
   width: 100%;
   border-collapse: collapse;
@@ -134,13 +138,11 @@ h1, h2 {
   background-color: #c8e6c9;
 }
 
-/* On the clock styling */
 .on-the-clock {
   color: #d32f2f;
   font-weight: bold;
 }
 
-/* Draft complete banner styling */
 .draft-complete-banner {
   text-align: center;
   background-color: #4CAF50;
@@ -151,4 +153,9 @@ h1, h2 {
   border-radius: 12px;
   max-width: 400px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.team-list.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
