@@ -63,13 +63,19 @@ function App() {
 
   return (
     <div className="app">
-      <h1>HFH Golf Draft</h1>
+      <h1>🏌️‍♂️ HFH Golf Draft 🏆</h1>
 
       <button className="reset-button" onClick={handleResetDraft}>
         Reset Draft
       </button>
 
-      <h2>Round {round} — Drafting: {draftOrder[currentPickIndex] || 'Draft Complete!'}</h2>
+      <h2>
+        Round {round} — {draftOrder[currentPickIndex] ? (
+          <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span>
+        ) : (
+          'Draft Complete!'
+        )}
+      </h2>
 
       <div className="team-list">
         {teams
