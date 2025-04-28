@@ -1,18 +1,23 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f0f2f5;
+  background-color: #d8f3dc;
+  color: #333;
 }
 
 .app {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 1000px;
+  margin: 20px auto;
   padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
   text-align: center;
+  color: #4CAF50;
 }
 
 .team-list {
@@ -24,21 +29,26 @@ h1, h2 {
 }
 
 .team-button {
-  padding: 10px 15px;
+  padding: 12px 18px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
   background-color: white;
+  color: #4CAF50;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
 }
 
 .team-button:hover {
-  background-color: #e6f7ff;
+  background-color: #81c784;
+  color: white;
+  transform: scale(1.05);
 }
 
 .team-button:disabled {
   background-color: #ddd;
+  color: #999;
+  border: 2px solid #ccc;
   cursor: not-allowed;
 }
 
@@ -59,9 +69,10 @@ h1, h2 {
   background-color: #ff4d4d;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-size: 1rem;
+  transition: background-color 0.3s;
 }
 
 .reset-button:hover {
@@ -77,13 +88,13 @@ h1, h2 {
 
 .draft-summary th, .draft-summary td {
   border: 1px solid #ccc;
-  padding: 12px 16px;
+  padding: 14px 18px;
   text-align: center;
   font-size: 16px;
 }
 
 .draft-summary th {
-  background-color: #007bff;
+  background-color: #4CAF50;
   color: white;
 }
 
@@ -96,5 +107,11 @@ h1, h2 {
 }
 
 .draft-summary tr:hover td {
-  background-color: #e0f7fa;
+  background-color: #c8e6c9;
+}
+
+/* On the clock styling */
+.on-the-clock {
+  color: #d32f2f;
+  font-weight: bold;
 }
