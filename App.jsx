@@ -18,10 +18,26 @@ function App() {
       .then((res) => res.json())
       .then((data) => {
         setDraftOrder(data.draftOrder);
-        setTeams(data.teams);
         setEventName(data.eventName || "This Week's Event");
       })
       .catch((err) => console.error('Error loading config:', err));
+
+    fetch('/golfer_field.csv')
+      .then((res) => res.text())
+      .then((text) => {
+        const lines = text.split('\n').slice(1);
+        const loadedTeams = lines
+          .map(line => {
+            const [team, odds] = line.split(',');
+            if (team && odds) {
+              return { team: team.trim(), odds: parseInt(odds.trim()) };
+            }
+            return null;
+          })
+          .filter(Boolean);
+        setTeams(loadedTeams);
+      })
+      .catch((err) => console.error('Error loading CSV:', err));
   }, []);
 
   useEffect(() => {
@@ -37,8 +53,6 @@ function App() {
 
   useEffect(() => {
     if (draftedTeams.length > 0) {
-      const lastPick = draftedTeams[draftedTeams.length - 1];
-      const pickIndex = draftOrder.findIndex(d => d === lastPick.drafter);
       const totalPicks = draftedTeams.length;
       const roundsCompleted = Math.floor(totalPicks / draftOrder.length);
       const isEvenRound = roundsCompleted % 2 === 1;
@@ -72,7 +86,7 @@ function App() {
   const handleUndoPick = () => {
     if (draftedTeams.length === 0) return;
     const updatedDraftedTeams = draftedTeams.slice(0, -1);
-    updateDraftDraftState(updatedDraftedTeams);
+    updateDraftState(updatedDraftedTeams);
     setRedoStack(prev => [...prev, draftedTeams[draftedTeams.length - 1]]);
   };
 
