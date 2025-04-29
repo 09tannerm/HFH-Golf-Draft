@@ -12,6 +12,7 @@ function App() {
   const [round, setRound] = useState(1);
   const [draftComplete, setDraftComplete] = useState(false);
   const [eventName, setEventName] = useState("This Week's Event");
+  const [standings, setStandings] = useState([]);
 
   useEffect(() => {
     fetch('/tournament_config.json')
@@ -48,6 +49,23 @@ function App() {
         setDraftOrder(loadedDraftOrder);
       })
       .catch((err) => console.error('Error loading draft order CSV:', err));
+
+    fetch('/standings.csv')
+      .then((res) => res.text())
+      .then((text) => {
+        const lines = text.split('\n').slice(1);
+        const loadedStandings = lines
+          .map(line => {
+            const [name, points] = line.split(',');
+            if (name && points) {
+              return { name: name.trim(), points: parseFloat(points.trim()) };
+            }
+            return null;
+          })
+          .filter(Boolean);
+        setStandings(loadedStandings);
+      })
+      .catch((err) => console.error('Error loading standings CSV:', err));
   }, []);
 
   useEffect(() => {
@@ -57,7 +75,6 @@ function App() {
         setDraftedTeams(data.draftedTeams || []);
       }
     });
-
     return () => unsub();
   }, []);
 
@@ -66,7 +83,6 @@ function App() {
       const totalPicks = draftedTeams.length;
       const roundsCompleted = Math.floor(totalPicks / draftOrder.length);
       const isEvenRound = roundsCompleted % 2 === 1;
-
       if (isEvenRound) {
         setCurrentPickIndex(draftOrder.length - (totalPicks % draftOrder.length) - 1);
       } else {
@@ -77,7 +93,6 @@ function App() {
       setCurrentPickIndex(0);
       setRound(1);
     }
-
     setDraftComplete(draftedTeams.length === draftOrder.length * 3);
   }, [draftedTeams, draftOrder]);
 
@@ -87,7 +102,6 @@ function App() {
 
   const handleDraftTeam = (team) => {
     if (draftedTeams.find((t) => t.team === team.team)) return;
-
     const updatedDraftedTeams = [...draftedTeams, { ...team, drafter: draftOrder[currentPickIndex], roundDrafted: round }];
     updateDraftState(updatedDraftedTeams);
     setRedoStack([]);
@@ -118,20 +132,17 @@ function App() {
 
   const handleCopyDraftSummary = () => {
     let summaryText = `Draft Results for ${eventName}:\n\n`;
-
     draftOrder.forEach(drafter => {
       const picks = draftedByDrafter[drafter] || [];
       const pickStrings = picks.map(pick => `${pick.team} (+${pick.odds})`);
       summaryText += `${drafter}: ${pickStrings.join(', ')}\n`;
     });
-
     navigator.clipboard.writeText(summaryText)
       .then(() => alert('Draft Summary copied!'))
       .catch((err) => console.error('Failed to copy:', err));
   };
 
   const isDrafted = (teamName) => draftedTeams.some((t) => t.team === teamName);
-
   const draftedByDrafter = {};
   draftedTeams.forEach((pick) => {
     if (!draftedByDrafter[pick.drafter]) {
@@ -144,6 +155,17 @@ function App() {
     <div className="app">
       <h1>🏌️‍♂️ HFH Golf Draft 🏆</h1>
       <h2 className="event-name">⛳ {eventName}</h2>
+
+      {standings.length > 0 && (
+        <div className="standings">
+          <h3>📊 HFH Season Standings</h3>
+          <ul>
+            {standings.map((s, i) => (
+              <li key={i}>{i + 1}. {s.name} — {s.points} pts</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="button-group">
         <button className="reset-button" onClick={handleResetDraft}>Reset Draft</button>
@@ -159,23 +181,13 @@ function App() {
 
       {!draftComplete && (
         <>
-          <h2>
-            Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span>
-          </h2>
-
+          <h2>Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span></h2>
           <div className="team-list">
-            {teams
-              .filter((team) => !isDrafted(team.team))
-              .map((team, idx) => (
-                <button
-                  key={idx}
-                  className="team-button"
-                  onClick={() => handleDraftTeam(team)}
-                  disabled={currentPickIndex >= draftOrder.length}
-                >
-                  {team.team} (+{team.odds})
-                </button>
-              ))}
+            {teams.filter((team) => !isDrafted(team.team)).map((team, idx) => (
+              <button key={idx} className="team-button" onClick={() => handleDraftTeam(team)} disabled={currentPickIndex >= draftOrder.length}>
+                {team.team} (+{team.odds})
+              </button>
+            ))}
           </div>
         </>
       )}
@@ -200,9 +212,7 @@ function App() {
                     <td key={pickIdx}>
                       {draftedByDrafter[drafter] && draftedByDrafter[drafter][pickIdx] ? (
                         `${draftedByDrafter[drafter][pickIdx].team} (+${draftedByDrafter[drafter][pickIdx].odds})`
-                      ) : (
-                        ''
-                      )}
+                      ) : ''}
                     </td>
                   ))}
                 </tr>
@@ -233,9 +243,7 @@ function App() {
                     <td key={pickIdx}>
                       {draftedByDrafter[drafter] && draftedByDrafter[drafter][pickIdx] ? (
                         `${draftedByDrafter[drafter][pickIdx].team} (+${draftedByDrafter[drafter][pickIdx].odds})`
-                      ) : (
-                        ''
-                      )}
+                      ) : ''}
                     </td>
                   ))}
                 </tr>
