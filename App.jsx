@@ -92,6 +92,20 @@ function App() {
     }
   };
 
+  const handleCopyDraftSummary = () => {
+    let summaryText = `Draft Results for ${eventName}:\n\n`;
+
+    draftOrder.forEach(drafter => {
+      const picks = draftedByDrafter[drafter] || [];
+      const pickStrings = picks.map(pick => `${pick.team} (+${pick.odds})`);
+      summaryText += `${drafter}: ${pickStrings.join(', ')}\n`;
+    });
+
+    navigator.clipboard.writeText(summaryText)
+      .then(() => alert('Draft Summary copied!'))
+      .catch((err) => console.error('Failed to copy:', err));
+  };
+
   const isDrafted = (teamName) => draftedTeams.some((t) => t.team === teamName);
 
   const draftedByDrafter = {};
@@ -113,12 +127,37 @@ function App() {
         <button className="redo-button" onClick={handleRedoPick}>Redo Pick</button>
       </div>
 
-      {draftComplete ? (
-        <>
-          <div className="draft-complete-banner">
-            🎉 Draft Complete! 🏆
-          </div>
+      {draftComplete && (
+        <div className="draft-complete-banner">
+          🎉 Draft Complete! 🏆
+        </div>
+      )}
 
+      {!draftComplete && (
+        <>
+          <h2>
+            Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span>
+          </h2>
+
+          <div className="team-list">
+            {teams
+              .filter((team) => !isDrafted(team.team))
+              .map((team, idx) => (
+                <button
+                  key={idx}
+                  className="team-button"
+                  onClick={() => handleDraftTeam(team)}
+                  disabled={currentPickIndex >= draftOrder.length}
+                >
+                  {team.team} (+{team.odds})
+                </button>
+              ))}
+          </div>
+        </>
+      )}
+
+      {draftComplete && (
+        <>
           <h2>Final Draft Summary</h2>
           <table className="draft-summary">
             <thead>
@@ -146,29 +185,38 @@ function App() {
               ))}
             </tbody>
           </table>
-        </>
-      ) : (
-        <>
-          <h2>
-            Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span>
-          </h2>
-
-          <div className="team-list">
-            {teams
-              .filter((team) => !isDrafted(team.team))
-              .map((team, idx) => (
-                <button
-                  key={idx}
-                  className="team-button"
-                  onClick={() => handleDraftTeam(team)}
-                  disabled={currentPickIndex >= draftOrder.length}
-                >
-                  {team.team} (+{team.odds})
-                </button>
-              ))}
-          </div>
+          <button className="copy-button" onClick={handleCopyDraftSummary}>📋 Copy Draft Summary</button>
         </>
       )}
+
+      {/* Always show Final Draft Summary at bottom */}
+      <h2>Final Draft Summary</h2>
+      <table className="draft-summary">
+        <thead>
+          <tr>
+            <th>Drafter</th>
+            <th>Pick 1</th>
+            <th>Pick 2</th>
+            <th>Pick 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          {draftOrder.map((drafter) => (
+            <tr key={drafter}>
+              <td><strong>{drafter}</strong></td>
+              {[0, 1, 2].map((pickIdx) => (
+                <td key={pickIdx}>
+                  {draftedByDrafter[drafter] && draftedByDrafter[drafter][pickIdx] ? (
+                    `${draftedByDrafter[drafter][pickIdx].team} (+${draftedByDrafter[drafter][pickIdx].odds})`
+                  ) : (
+                    ''
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
