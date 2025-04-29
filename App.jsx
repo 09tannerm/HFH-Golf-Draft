@@ -17,7 +17,6 @@ function App() {
     fetch('/tournament_config.json')
       .then((res) => res.json())
       .then((data) => {
-        setDraftOrder(data.draftOrder);
         setEventName(data.eventName || "This Week's Event");
       })
       .catch((err) => console.error('Error loading config:', err));
@@ -37,7 +36,18 @@ function App() {
           .filter(Boolean);
         setTeams(loadedTeams);
       })
-      .catch((err) => console.error('Error loading CSV:', err));
+      .catch((err) => console.error('Error loading golfer field CSV:', err));
+
+    fetch('/draft_order.csv')
+      .then((res) => res.text())
+      .then((text) => {
+        const lines = text.split('\n').slice(1);
+        const loadedDraftOrder = lines
+          .map(line => line.trim())
+          .filter(Boolean);
+        setDraftOrder(loadedDraftOrder);
+      })
+      .catch((err) => console.error('Error loading draft order CSV:', err));
   }, []);
 
   useEffect(() => {
