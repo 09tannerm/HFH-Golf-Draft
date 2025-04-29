@@ -107,7 +107,13 @@ function App() {
       <h1>🏌️‍♂️ HFH Golf Draft 🏆</h1>
       <h2 className="event-name">⛳ {eventName}</h2>
 
-      {draftComplete && (
+      <div className="button-group">
+        <button className="reset-button" onClick={handleResetDraft}>Reset Draft</button>
+        <button className="undo-button" onClick={handleUndoPick}>Undo Pick</button>
+        <button className="redo-button" onClick={handleRedoPick}>Redo Pick</button>
+      </div>
+
+      {draftComplete ? (
         <>
           <div className="draft-complete-banner">
             🎉 Draft Complete! 🏆
@@ -141,21 +147,13 @@ function App() {
             </tbody>
           </table>
         </>
-      )}
-
-      {!draftComplete && (
+      ) : (
         <>
-          <div className="button-group">
-            <button className="reset-button" onClick={handleResetDraft}>Reset Draft</button>
-            <button className="undo-button" onClick={handleUndoPick}>Undo Pick</button>
-            <button className="redo-button" onClick={handleRedoPick}>Redo Pick</button>
-          </div>
-
           <h2>
             Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span>
           </h2>
 
-          <div className={`team-list`}>
+          <div className="team-list">
             {teams
               .filter((team) => !isDrafted(team.team))
               .map((team, idx) => (
