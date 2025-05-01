@@ -13,6 +13,9 @@ function App() {
   const [draftComplete, setDraftComplete] = useState(false);
   const [eventName, setEventName] = useState("This Week's Event");
   const [standings, setStandings] = useState([]);
+  const [overrides, setOverrides] = useState({});
+  const [editingCell, setEditingCell] = useState(null);
+  const [editValue, setEditValue] = useState('');
 
   useEffect(() => {
     fetch('/tournament_config.json')
@@ -73,6 +76,7 @@ function App() {
       if (docSnap.exists()) {
         const data = docSnap.data();
         setDraftedTeams(data.draftedTeams || []);
+        setOverrides(data.overrides || {});
       }
     });
     return () => unsub();
@@ -96,8 +100,24 @@ function App() {
     setDraftComplete(draftedTeams.length === draftOrder.length * 3);
   }, [draftedTeams, draftOrder]);
 
-  const updateDraftState = async (newDraftedTeams) => {
-    await setDoc(doc(db, 'draftState', 'current'), { draftedTeams: newDraftedTeams });
+  const updateDraftState = async (newDraftedTeams, newOverrides = overrides) => {
+    await setDoc(doc(db, 'draftState', 'current'), {
+      draftedTeams: newDraftedTeams,
+      overrides: newOverrides
+    });
+  };
+
+  const handleOverrideEdit = (drafter, pickIdx) => {
+    setEditingCell(`${drafter}_${pickIdx}`);
+    const pick = draftedByDrafter[drafter]?.[pickIdx];
+    setEditValue(overrides[`${drafter}_${pickIdx}`] || (pick ? `${pick.team} (+${pick.odds})` : ''));
+  };
+
+  const handleOverrideSave = (drafter, pickIdx) => {
+    const updatedOverrides = { ...overrides, [`${drafter}_${pickIdx}`]: editValue };
+    setOverrides(updatedOverrides);
+    updateDraftState(draftedTeams, updatedOverrides);
+    setEditingCell(null);
   };
 
   const handleDraftTeam = (team) => {
@@ -125,7 +145,7 @@ function App() {
   const handleResetDraft = () => {
     const confirmed = window.confirm('Are you sure you want to reset the draft?');
     if (confirmed) {
-      updateDraftState([]);
+      updateDraftState([], {});
       setRedoStack([]);
     }
   };
@@ -134,7 +154,7 @@ function App() {
     let summaryText = `Draft Results for ${eventName}:\n\n`;
     draftOrder.forEach(drafter => {
       const picks = draftedByDrafter[drafter] || [];
-      const pickStrings = picks.map(pick => `${pick.team} (+${pick.odds})`);
+      const pickStrings = picks.map((pick, idx) => overrides[`${drafter}_${idx}`] || `${pick.team} (+${pick.odds})`);
       summaryText += `${drafter}: ${pickStrings.join(', ')}\n`;
     });
     navigator.clipboard.writeText(summaryText)
@@ -174,9 +194,7 @@ function App() {
       </div>
 
       {draftComplete && (
-        <div className="draft-complete-banner">
-          🎉 Draft Complete! 🏆
-        </div>
+        <div className="draft-complete-banner">🎉 Draft Complete! 🏆</div>
       )}
 
       {!draftComplete && (
@@ -184,9 +202,7 @@ function App() {
           <h2>Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span></h2>
           <div className="team-list">
             {teams.filter((team) => !isDrafted(team.team)).map((team, idx) => (
-              <button key={idx} className="team-button" onClick={() => handleDraftTeam(team)} disabled={currentPickIndex >= draftOrder.length}>
-                {team.team} (+{team.odds})
-              </button>
+              <button key={idx} className="team-button" onClick={() => handleDraftTeam(team)}>{team.team} (+{team.odds})</button>
             ))}
           </div>
         </>
@@ -208,48 +224,32 @@ function App() {
               {draftOrder.map((drafter) => (
                 <tr key={drafter}>
                   <td><strong>{drafter}</strong></td>
-                  {[0, 1, 2].map((pickIdx) => (
-                    <td key={pickIdx}>
-                      {draftedByDrafter[drafter] && draftedByDrafter[drafter][pickIdx] ? (
-                        `${draftedByDrafter[drafter][pickIdx].team} (+${draftedByDrafter[drafter][pickIdx].odds})`
-                      ) : ''}
-                    </td>
-                  ))}
+                  {[0, 1, 2].map((pickIdx) => {
+                    const key = `${drafter}_${pickIdx}`;
+                    const isEditing = editingCell === key;
+                    const pick = draftedByDrafter[drafter]?.[pickIdx];
+                    return (
+                      <td key={pickIdx} onClick={() => handleOverrideEdit(drafter, pickIdx)}>
+                        {isEditing ? (
+                          <input
+                            className="override-input"
+                            value={editValue}
+                            onChange={(e) => setEditValue(e.target.value)}
+                            onBlur={() => handleOverrideSave(drafter, pickIdx)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleOverrideSave(drafter, pickIdx)}
+                            autoFocus
+                          />
+                        ) : (
+                          overrides[key] || (pick ? `${pick.team} (+${pick.odds})` : '')
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))}
             </tbody>
           </table>
           <button className="copy-button" onClick={handleCopyDraftSummary}>📋 Copy Draft Summary</button>
-        </>
-      )}
-
-      {!draftComplete && (
-        <>
-          <h2>Final Draft Summary</h2>
-          <table className="draft-summary">
-            <thead>
-              <tr>
-                <th>Drafter</th>
-                <th>Pick 1</th>
-                <th>Pick 2</th>
-                <th>Pick 3</th>
-              </tr>
-            </thead>
-            <tbody>
-              {draftOrder.map((drafter) => (
-                <tr key={drafter}>
-                  <td><strong>{drafter}</strong></td>
-                  {[0, 1, 2].map((pickIdx) => (
-                    <td key={pickIdx}>
-                      {draftedByDrafter[drafter] && draftedByDrafter[drafter][pickIdx] ? (
-                        `${draftedByDrafter[drafter][pickIdx].team} (+${draftedByDrafter[drafter][pickIdx].odds})`
-                      ) : ''}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </>
       )}
     </div>
