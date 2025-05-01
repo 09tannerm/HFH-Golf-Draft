@@ -149,10 +149,16 @@ h1, h2 {
   text-align: center;
 }
 
+/* 🔧 NEW: Override input style */
 .override-input {
   width: 100%;
   font-size: 1rem;
   border: 1px solid #888;
   border-radius: 4px;
   padding: 4px;
+}
+
+.override-input:focus {
+  outline: 2px solid #007bff;
+  background-color: #e6f0ff;
 }
