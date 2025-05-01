@@ -148,3 +148,11 @@ h1, h2 {
   font-size: 0.95rem;
   text-align: center;
 }
+
+.override-input {
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid #888;
+  border-radius: 4px;
+  padding: 4px;
+}
