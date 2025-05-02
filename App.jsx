@@ -79,7 +79,7 @@ function App() {
       const pickStr = picks.map((pick, idx) => {
         const key = `${drafter}_${idx}`;
         const raw = overrides[key] || pick.team;
-        const clean = raw.replace(/\s*\(\+?\d{3,5}\)/g, '').trim();
+        const clean = raw.replace(/\s*\(\+?\d+\)/g, '').trim();
         const score = scores[key] ? ` [${scores[key]}]` : '';
         return clean + score;
       });
@@ -112,7 +112,7 @@ function App() {
                 const isEditing = editingCell === key;
                 const pick = draftedByDrafter[drafter]?.[pickIdx];
                 const rawName = overrides[key] || (pick ? pick.team : '');
-                const name = rawName.replace(/\s*\(\+?\d{3,5}\)/g, '').trim();
+                const name = rawName.replace(/\s*\(\+?\d+\)/g, '').trim();
                 const score = scores[key] || '';
                 return (
                   <td key={pickIdx}>
