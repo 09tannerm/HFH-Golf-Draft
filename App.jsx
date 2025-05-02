@@ -14,6 +14,7 @@ function App() {
   const [eventName, setEventName] = useState("This Week's Event");
   const [standings, setStandings] = useState([]);
   const [overrides, setOverrides] = useState({});
+  const [scores, setScores] = useState({});
   const [editingCell, setEditingCell] = useState(null);
   const [editValue, setEditValue] = useState('');
 
@@ -77,6 +78,7 @@ function App() {
         const data = docSnap.data();
         setDraftedTeams(data.draftedTeams || []);
         setOverrides(data.overrides || {});
+        setScores(data.scores || {});
       }
     });
     return () => unsub();
@@ -100,23 +102,30 @@ function App() {
     setDraftComplete(draftedTeams.length === draftOrder.length * 3);
   }, [draftedTeams, draftOrder]);
 
-  const updateDraftState = async (newDraftedTeams, newOverrides = overrides) => {
+  const updateDraftState = async (newDraftedTeams, newOverrides = overrides, newScores = scores) => {
     await setDoc(doc(db, 'draftState', 'current'), {
       draftedTeams: newDraftedTeams,
-      overrides: newOverrides
+      overrides: newOverrides,
+      scores: newScores
     });
+  };
+
+  const handleScoreChange = (drafter, pickIdx, value) => {
+    const updatedScores = { ...scores, [`${drafter}_${pickIdx}`]: value };
+    setScores(updatedScores);
+    updateDraftState(draftedTeams, overrides, updatedScores);
   };
 
   const handleOverrideEdit = (drafter, pickIdx) => {
     setEditingCell(`${drafter}_${pickIdx}`);
     const pick = draftedByDrafter[drafter]?.[pickIdx];
-    setEditValue(overrides[`${drafter}_${pickIdx}`] || (pick ? `${pick.team} (+${pick.odds})` : ''));
+    setEditValue(overrides[`${drafter}_${pickIdx}`] || (pick ? pick.team : ''));
   };
 
   const handleOverrideSave = (drafter, pickIdx) => {
     const updatedOverrides = { ...overrides, [`${drafter}_${pickIdx}`]: editValue };
     setOverrides(updatedOverrides);
-    updateDraftState(draftedTeams, updatedOverrides);
+    updateDraftState(draftedTeams, updatedOverrides, scores);
     setEditingCell(null);
   };
 
@@ -145,7 +154,7 @@ function App() {
   const handleResetDraft = () => {
     const confirmed = window.confirm('Are you sure you want to reset the draft?');
     if (confirmed) {
-      updateDraftState([], {});
+      updateDraftState([], {}, {});
       setRedoStack([]);
     }
   };
@@ -154,7 +163,12 @@ function App() {
     let summaryText = `Draft Results for ${eventName}:\n\n`;
     draftOrder.forEach(drafter => {
       const picks = draftedByDrafter[drafter] || [];
-      const pickStrings = picks.map((pick, idx) => overrides[`${drafter}_${idx}`] || `${pick.team} (+${pick.odds})`);
+      const pickStrings = picks.map((pick, idx) => {
+        const key = `${drafter}_${idx}`;
+        const name = overrides[key] || pick.team;
+        const score = scores[key] ? ` [${scores[key]}]` : '';
+        return `${name}${score}`;
+      });
       summaryText += `${drafter}: ${pickStrings.join(', ')}\n`;
     });
     navigator.clipboard.writeText(summaryText)
@@ -228,20 +242,32 @@ function App() {
                     const key = `${drafter}_${pickIdx}`;
                     const isEditing = editingCell === key;
                     const pick = draftedByDrafter[drafter]?.[pickIdx];
+                    const name = overrides[key] || (pick ? pick.team : '');
+                    const score = scores[key] || '';
                     return (
-                      <td key={pickIdx} onClick={() => handleOverrideEdit(drafter, pickIdx)}>
-                        {isEditing ? (
+                      <td key={pickIdx}>
+                        <div onClick={() => handleOverrideEdit(drafter, pickIdx)}>
+                          {isEditing ? (
+                            <input
+                              className="override-input"
+                              value={editValue}
+                              onChange={(e) => setEditValue(e.target.value)}
+                              onBlur={() => handleOverrideSave(drafter, pickIdx)}
+                              onKeyDown={(e) => e.key === 'Enter' && handleOverrideSave(drafter, pickIdx)}
+                              autoFocus
+                            />
+                          ) : (
+                            name
+                          )}
+                        </div>
+                        <div>
                           <input
                             className="override-input"
-                            value={editValue}
-                            onChange={(e) => setEditValue(e.target.value)}
-                            onBlur={() => handleOverrideSave(drafter, pickIdx)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleOverrideSave(drafter, pickIdx)}
-                            autoFocus
+                            placeholder="Score"
+                            value={score}
+                            onChange={(e) => handleScoreChange(drafter, pickIdx, e.target.value)}
                           />
-                        ) : (
-                          overrides[key] || (pick ? `${pick.team} (+${pick.odds})` : '')
-                        )}
+                        </div>
                       </td>
                     );
                   })}
