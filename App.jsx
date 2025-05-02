@@ -14,149 +14,160 @@ function App() {
   const [eventName, setEventName] = useState("This Week's Event");
   const [standings, setStandings] = useState([]);
   const [overrides, setOverrides] = useState({});
-  const [scores, setScores] = useState({});
   const [editingCell, setEditingCell] = useState(null);
   const [editValue, setEditValue] = useState('');
 
   useEffect(() => {
     fetch('/tournament_config.json')
-      .then(res => res.json())
-      .then(data => setEventName(data.eventName || "This Week's Event"));
+      .then((res) => res.json())
+      .then((data) => {
+        setEventName(data.eventName || "This Week's Event");
+      })
+      .catch((err) => console.error('Error loading config:', err));
 
     fetch('/golfer_field.csv')
-      .then(res => res.text())
-      .then(text => {
+      .then((res) => res.text())
+      .then((text) => {
         const lines = text.split('\n').slice(1);
-        const loadedTeams = lines.map(line => {
-          const [team, odds] = line.split(',');
-          return team && odds ? { team: team.trim(), odds: parseInt(odds.trim()) } : null;
-        }).filter(Boolean);
+        const loadedTeams = lines
+          .map(line => {
+            const [team, odds] = line.split(',');
+            if (team && odds) {
+              return { team: team.trim(), odds: parseInt(odds.trim()) };
+            }
+            return null;
+          })
+          .filter(Boolean);
         setTeams(loadedTeams);
-      });
+      })
+      .catch((err) => console.error('Error loading golfer field CSV:', err));
 
     fetch('/draft_order.csv')
-      .then(res => res.text())
-      .then(text => {
+      .then((res) => res.text())
+      .then((text) => {
         const lines = text.split('\n').slice(1);
-        setDraftOrder(lines.map(name => name.trim()).filter(Boolean));
-      });
+        const loadedDraftOrder = lines
+          .map(line => line.trim())
+          .filter(Boolean);
+        setDraftOrder(loadedDraftOrder);
+      })
+      .catch((err) => console.error('Error loading draft order CSV:', err));
 
     fetch('/standings.csv')
-      .then(res => res.text())
-      .then(text => {
+      .then((res) => res.text())
+      .then((text) => {
         const lines = text.split('\n').slice(1);
-        const parsed = lines.map(line => {
-          const [name, points] = line.split(',');
-          return name && points ? { name: name.trim(), points: parseFloat(points.trim()) } : null;
-        }).filter(Boolean);
-        setStandings(parsed);
-      });
+        const loadedStandings = lines
+          .map(line => {
+            const [name, points] = line.split(',');
+            if (name && points) {
+              return { name: name.trim(), points: parseFloat(points.trim()) };
+            }
+            return null;
+          })
+          .filter(Boolean);
+        setStandings(loadedStandings);
+      })
+      .catch((err) => console.error('Error loading standings CSV:', err));
   }, []);
 
   useEffect(() => {
-    return onSnapshot(doc(db, 'draftState', 'current'), (docSnap) => {
+    const unsub = onSnapshot(doc(db, 'draftState', 'current'), (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data();
         setDraftedTeams(data.draftedTeams || []);
         setOverrides(data.overrides || {});
-        setScores(data.scores || {});
       }
     });
+    return () => unsub();
   }, []);
 
   useEffect(() => {
-    const total = draftedTeams.length;
-    const rounds = Math.floor(total / draftOrder.length);
-    const isEven = rounds % 2 === 1;
-    setCurrentPickIndex(isEven
-      ? draftOrder.length - (total % draftOrder.length) - 1
-      : total % draftOrder.length
-    );
-    setRound(rounds + 1);
-    setDraftComplete(total === draftOrder.length * 3);
+    if (draftedTeams.length > 0) {
+      const totalPicks = draftedTeams.length;
+      const roundsCompleted = Math.floor(totalPicks / draftOrder.length);
+      const isEvenRound = roundsCompleted % 2 === 1;
+      if (isEvenRound) {
+        setCurrentPickIndex(draftOrder.length - (totalPicks % draftOrder.length) - 1);
+      } else {
+        setCurrentPickIndex(totalPicks % draftOrder.length);
+      }
+      setRound(roundsCompleted + 1);
+    } else {
+      setCurrentPickIndex(0);
+      setRound(1);
+    }
+    setDraftComplete(draftedTeams.length === draftOrder.length * 3);
   }, [draftedTeams, draftOrder]);
 
-  const updateDraftState = (newDrafted, newOverrides = overrides, newScores = scores) => {
-    return setDoc(doc(db, 'draftState', 'current'), {
-      draftedTeams: newDrafted,
-      overrides: newOverrides,
-      scores: newScores
+  const updateDraftState = async (newDraftedTeams, newOverrides = overrides) => {
+    await setDoc(doc(db, 'draftState', 'current'), {
+      draftedTeams: newDraftedTeams,
+      overrides: newOverrides
     });
   };
 
+  const handleOverrideEdit = (drafter, pickIdx) => {
+    setEditingCell(`${drafter}_${pickIdx}`);
+    const pick = draftedByDrafter[drafter]?.[pickIdx];
+    setEditValue(overrides[`${drafter}_${pickIdx}`] || (pick ? `${pick.team} (+${pick.odds})` : ''));
+  };
+
+  const handleOverrideSave = (drafter, pickIdx) => {
+    const updatedOverrides = { ...overrides, [`${drafter}_${pickIdx}`]: editValue };
+    setOverrides(updatedOverrides);
+    updateDraftState(draftedTeams, updatedOverrides);
+    setEditingCell(null);
+  };
+
   const handleDraftTeam = (team) => {
-    if (draftedTeams.some(t => t.team === team.team)) return;
-    const drafter = draftOrder[currentPickIndex];
-    const updated = [...draftedTeams, { ...team, drafter, roundDrafted: round }];
-    updateDraftState(updated);
+    if (draftedTeams.find((t) => t.team === team.team)) return;
+    const updatedDraftedTeams = [...draftedTeams, { ...team, drafter: draftOrder[currentPickIndex], roundDrafted: round }];
+    updateDraftState(updatedDraftedTeams);
     setRedoStack([]);
   };
 
   const handleUndoPick = () => {
-    if (!draftedTeams.length) return;
-    const updated = [...draftedTeams];
-    const popped = updated.pop();
-    updateDraftState(updated);
-    setRedoStack(prev => [...prev, popped]);
+    if (draftedTeams.length === 0) return;
+    const updatedDraftedTeams = draftedTeams.slice(0, -1);
+    updateDraftState(updatedDraftedTeams);
+    setRedoStack(prev => [...prev, draftedTeams[draftedTeams.length - 1]]);
   };
 
   const handleRedoPick = () => {
-    if (!redoStack.length) return;
-    const next = redoStack[redoStack.length - 1];
-    updateDraftState([...draftedTeams, next]);
+    if (redoStack.length === 0) return;
+    const nextPick = redoStack[redoStack.length - 1];
+    const updatedDraftedTeams = [...draftedTeams, nextPick];
+    updateDraftState(updatedDraftedTeams);
     setRedoStack(prev => prev.slice(0, -1));
   };
 
   const handleResetDraft = () => {
-    if (window.confirm("Reset draft?")) {
-      updateDraftState([], {}, {});
+    const confirmed = window.confirm('Are you sure you want to reset the draft?');
+    if (confirmed) {
+      updateDraftState([], {});
       setRedoStack([]);
     }
   };
 
-  const handleOverrideEdit = (drafter, pickIdx) => {
-    const key = `${drafter}_${pickIdx}`;
-    setEditingCell(key);
-    const pick = draftedByDrafter[drafter]?.[pickIdx];
-    setEditValue(overrides[key] || (pick ? pick.team : ''));
-  };
-
-  const handleOverrideSave = (drafter, pickIdx) => {
-    const key = `${drafter}_${pickIdx}`;
-    const updated = { ...overrides, [key]: editValue };
-    setOverrides(updated);
-    updateDraftState(draftedTeams, updated, scores);
-    setEditingCell(null);
-  };
-
-  const handleScoreChange = (drafter, pickIdx, value) => {
-    const key = `${drafter}_${pickIdx}`;
-    const updated = { ...scores, [key]: value };
-    setScores(updated);
-    updateDraftState(draftedTeams, overrides, updated);
-  };
-
   const handleCopyDraftSummary = () => {
-    let text = `Draft Results for ${eventName}:\n\n`;
+    let summaryText = `Draft Results for ${eventName}:\n\n`;
     draftOrder.forEach(drafter => {
       const picks = draftedByDrafter[drafter] || [];
-      const pickStr = picks.map((pick, idx) => {
-        const key = `${drafter}_${idx}`;
-        const raw = overrides[key] || pick.team;
-        const score = scores[key] ? ` [${scores[key]}]` : '';
-        return stripOdds(raw) + score;
-      });
-      text += `${drafter}: ${pickStr.join(', ')}\n`;
+      const pickStrings = picks.map((pick, idx) => overrides[`${drafter}_${idx}`] || `${pick.team} (+${pick.odds})`);
+      summaryText += `${drafter}: ${pickStrings.join(', ')}\n`;
     });
-    navigator.clipboard.writeText(text).then(() => alert("Copied!"));
+    navigator.clipboard.writeText(summaryText)
+      .then(() => alert('Draft Summary copied!'))
+      .catch((err) => console.error('Failed to copy:', err));
   };
 
-  const stripOdds = (text) => text.replace(/\s*\(\+?\d+\)/g, '').trim();
-  const isDrafted = name => draftedTeams.some(t => t.team === name);
-
+  const isDrafted = (teamName) => draftedTeams.some((t) => t.team === teamName);
   const draftedByDrafter = {};
-  draftedTeams.forEach(pick => {
-    if (!draftedByDrafter[pick.drafter]) draftedByDrafter[pick.drafter] = [];
+  draftedTeams.forEach((pick) => {
+    if (!draftedByDrafter[pick.drafter]) {
+      draftedByDrafter[pick.drafter] = [];
+    }
     draftedByDrafter[pick.drafter].push(pick);
   });
 
@@ -190,67 +201,56 @@ function App() {
         <>
           <h2>Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span></h2>
           <div className="team-list">
-            {teams.filter(team => !isDrafted(team.team)).map((team, idx) => (
-              <button key={idx} className="team-button" onClick={() => handleDraftTeam(team)}>
-                {team.team} (+{team.odds})
-              </button>
+            {teams.filter((team) => !isDrafted(team.team)).map((team, idx) => (
+              <button key={idx} className="team-button" onClick={() => handleDraftTeam(team)}>{team.team} (+{team.odds})</button>
             ))}
           </div>
         </>
       )}
 
-      <h2>Final Draft Summary</h2>
-      <table className="draft-summary">
-        <thead>
-          <tr>
-            <th>Drafter</th>
-            <th>Pick 1</th>
-            <th>Pick 2</th>
-            <th>Pick 3</th>
-          </tr>
-        </thead>
-        <tbody>
-          {draftOrder.map(drafter => (
-            <tr key={drafter}>
-              <td><strong>{drafter}</strong></td>
-              {[0, 1, 2].map(pickIdx => {
-                const key = `${drafter}_${pickIdx}`;
-                const isEditing = editingCell === key;
-                const pick = draftedByDrafter[drafter]?.[pickIdx];
-                const raw = overrides[key] || (pick ? pick.team : '');
-                const name = stripOdds(raw);
-                const score = scores[key] || '';
-                return (
-                  <td key={pickIdx}>
-                    <div onClick={() => handleOverrideEdit(drafter, pickIdx)}>
-                      {isEditing ? (
-                        <input
-                          className="override-input"
-                          value={editValue}
-                          onChange={e => setEditValue(e.target.value)}
-                          onBlur={() => handleOverrideSave(drafter, pickIdx)}
-                          onKeyDown={e => e.key === 'Enter' && handleOverrideSave(drafter, pickIdx)}
-                          autoFocus
-                        />
-                      ) : name}
-                    </div>
-                    <div>
-                      <input
-                        className="override-input"
-                        placeholder="Score"
-                        value={score}
-                        onChange={e => handleScoreChange(drafter, pickIdx, e.target.value)}
-                      />
-                    </div>
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
       {draftComplete && (
-        <button className="copy-button" onClick={handleCopyDraftSummary}>📋 Copy Draft Summary</button>
+        <>
+          <h2>Final Draft Summary</h2>
+          <table className="draft-summary">
+            <thead>
+              <tr>
+                <th>Drafter</th>
+                <th>Pick 1</th>
+                <th>Pick 2</th>
+                <th>Pick 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              {draftOrder.map((drafter) => (
+                <tr key={drafter}>
+                  <td><strong>{drafter}</strong></td>
+                  {[0, 1, 2].map((pickIdx) => {
+                    const key = `${drafter}_${pickIdx}`;
+                    const isEditing = editingCell === key;
+                    const pick = draftedByDrafter[drafter]?.[pickIdx];
+                    return (
+                      <td key={pickIdx} onClick={() => handleOverrideEdit(drafter, pickIdx)}>
+                        {isEditing ? (
+                          <input
+                            className="override-input"
+                            value={editValue}
+                            onChange={(e) => setEditValue(e.target.value)}
+                            onBlur={() => handleOverrideSave(drafter, pickIdx)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleOverrideSave(drafter, pickIdx)}
+                            autoFocus
+                          />
+                        ) : (
+                          overrides[key] || (pick ? `${pick.team} (+${pick.odds})` : '')
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button className="copy-button" onClick={handleCopyDraftSummary}>📋 Copy Draft Summary</button>
+        </>
       )}
     </div>
   );
