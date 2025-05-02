@@ -4,11 +4,21 @@ import { doc, setDoc, onSnapshot } from 'firebase/firestore';
 import './style.css';
 
 function App() {
-  // ... [existing state and effects] ...
+  // ... [rest of the unchanged logic] ...
+
+  const draftedByDrafter = {};
+  draftedTeams.forEach((pick) => {
+    if (!draftedByDrafter[pick.drafter]) {
+      draftedByDrafter[pick.drafter] = [];
+    }
+    draftedByDrafter[pick.drafter].push(pick);
+  });
+
+  const stripOdds = (text) => text.replace(/\s*\(\+?\d+\)/g, '').trim();
 
   return (
     <div className="app">
-      {/* ... [existing header, standings, and draft logic] ... */}
+      {/* ... [header and controls] ... */}
 
       {draftComplete && (
         <>
@@ -31,7 +41,7 @@ function App() {
                     const isEditing = editingCell === key;
                     const pick = draftedByDrafter[drafter]?.[pickIdx];
                     const rawName = overrides[key] || (pick ? pick.team : '');
-                    const name = rawName.replace(/\s*\(\+?\d+\)/, '');
+                    const name = stripOdds(rawName);
                     const score = scores[key] || '';
                     return (
                       <td key={pickIdx}>
