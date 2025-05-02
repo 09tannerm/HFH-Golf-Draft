@@ -26,6 +26,70 @@ function App() {
     draftedByDrafter[pick.drafter].push(pick);
   });
 
+  const stripOdds = (name) => name.replace(/\s*\(\+?\d+\)/g, '').trim();
+
+  const handleOverrideEdit = (drafter, pickIdx) => {
+    const key = `${drafter}_${pickIdx}`;
+    setEditingCell(key);
+    const pick = draftedByDrafter[drafter]?.[pickIdx];
+    setEditValue(overrides[key] || (pick ? pick.team : ''));
+  };
+
+  const handleOverrideSave = (drafter, pickIdx) => {
+    const key = `${drafter}_${pickIdx}`;
+    const updated = { ...overrides, [key]: editValue };
+    setOverrides(updated);
+    updateDraftState(draftedTeams, updated, scores);
+    setEditingCell(null);
+  };
+
+  const handleScoreChange = (drafter, pickIdx, value) => {
+    const key = `${drafter}_${pickIdx}`;
+    const updated = { ...scores, [key]: value };
+    setScores(updated);
+    updateDraftState(draftedTeams, overrides, updated);
+  };
+
+  const updateDraftState = (newDrafted, newOverrides = overrides, newScores = scores) => {
+    return setDoc(doc(db, 'draftState', 'current'), {
+      draftedTeams: newDrafted,
+      overrides: newOverrides,
+      scores: newScores
+    });
+  };
+
+  const calculateBestTwoTotal = (drafter) => {
+    const allScores = [0, 1, 2].map((i) => {
+      const key = `${drafter}_${i}`;
+      const val = scores[key];
+      const num = parseFloat(val);
+      return isNaN(num) ? null : num;
+    }).filter((n) => n !== null);
+    if (allScores.length < 2) return '';
+    allScores.sort((a, b) => a - b);
+    const total = allScores.slice(0, 2).reduce((a, b) => a + b, 0);
+    return total > 0 ? `+${total}` : total;
+  };
+
+  const handleCopyDraftSummary = () => {
+    let text = `Draft Results for ${eventName}:
+
+`;
+    draftOrder.forEach(drafter => {
+      const picks = draftedByDrafter[drafter] || [];
+      const pickStr = picks.map((pick, idx) => {
+        const key = `${drafter}_${idx}`;
+        const raw = overrides[key] || pick.team;
+        const score = scores[key] ? ` [${scores[key]}]` : '';
+        return stripOdds(raw) + score;
+      });
+      const total = calculateBestTwoTotal(drafter);
+      text += `${drafter}: ${pickStr.join(', ')}${total ? ` — Total: ${total}` : ''}
+`;
+    });
+    navigator.clipboard.writeText(text).then(() => alert("Copied!"));
+  };
+
   useEffect(() => {
     fetch('/tournament_config.json')
       .then((res) => res.json())
@@ -89,125 +153,8 @@ function App() {
     setDraftComplete(draftedTeams.length === draftOrder.length * 3);
   }, [draftedTeams, draftOrder]);
 
-  const stripOdds = (name) => name.replace(/\s*\(\+?\d+\)/g, '').trim();
-
-  const updateDraftState = (newDrafted, newOverrides = overrides, newScores = scores) => {
-    return setDoc(doc(db, 'draftState', 'current'), {
-      draftedTeams: newDrafted,
-      overrides: newOverrides,
-      scores: newScores
-    });
-  };
-
-  const handleOverrideEdit = (drafter, pickIdx) => {
-    const key = `${drafter}_${pickIdx}`;
-    setEditingCell(key);
-    const pick = draftedByDrafter[drafter]?.[pickIdx];
-    setEditValue(overrides[key] || (pick ? pick.team : ''));
-  };
-
-  const handleOverrideSave = (drafter, pickIdx) => {
-    const key = `${drafter}_${pickIdx}`;
-    const updated = { ...overrides, [key]: editValue };
-    setOverrides(updated);
-    updateDraftState(draftedTeams, updated, scores);
-    setEditingCell(null);
-  };
-
-  const handleScoreChange = (drafter, pickIdx, value) => {
-    const key = `${drafter}_${pickIdx}`;
-    const updated = { ...scores, [key]: value };
-    setScores(updated);
-    updateDraftState(draftedTeams, overrides, updated);
-  };
-
-  const calculateBestTwoTotal = (drafter) => {
-    const all = [0, 1, 2].map(i => {
-      const val = parseFloat(scores[`${drafter}_${i}`]);
-      return isNaN(val) ? null : val;
-    }).filter(n => n !== null);
-    if (all.length < 2) return '';
-    all.sort((a, b) => a - b);
-    const total = all.slice(0, 2).reduce((a, b) => a + b, 0);
-    return total > 0 ? `+${total}` : `${total}`;
-  };
-
-  const handleCopyDraftSummary = () => {
-    let summary = `Draft Results for ${eventName}:\n\n`;
-    draftOrder.forEach(drafter => {
-      const picks = draftedByDrafter[drafter] || [];
-      const formatted = picks.map((pick, i) => {
-        const key = `${drafter}_${i}`;
-        const raw = overrides[key] || pick.team;
-        const score = scores[key] ? ` [${scores[key]}]` : '';
-        return stripOdds(raw) + score;
-      });
-      const total = calculateBestTwoTotal(drafter);
-      summary += `${drafter}: ${formatted.join(', ')}${total ? ` — Total: ${total}` : ''}\n`;
-    });
-    navigator.clipboard.writeText(summary).then(() => alert('Copied!'));
-  };
-
   return (
     <div className="app">
-      <h1>🏌️ HFH Golf Draft</h1>
-      <h2>⛳ {eventName}</h2>
-
-      {standings.length > 0 && (
-        <div className="standings">
-          <h3>📊 HFH Season Standings</h3>
-          <ul>
-            {standings.map((s, i) => (
-              <li key={i}>{i + 1}. {s.name} — {s.points} pts</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {draftComplete && <div className="draft-complete-banner">🎉 Draft Complete! 🏆</div>}
-
-      {!draftComplete && (
-        <>
-          <h2>Round {round} — <span className="on-the-clock">{draftOrder[currentPickIndex]} (On the Clock)</span></h2>
-          <div className="team-list">
-            {teams.filter((t) => !draftedTeams.find(p => p.team === t.team)).map((team, i) => (
-              <button key={i} className="team-button" onClick={() => {
-                const updated = [...draftedTeams, {
-                  ...team,
-                  drafter: draftOrder[currentPickIndex],
-                  roundDrafted: round
-                }];
-                updateDraftState(updated);
-                setRedoStack([]);
-              }}>{team.team} (+{team.odds})</button>
-            ))}
-          </div>
-        </>
-      )}
-
-      <div className="button-group">
-        <button className="reset-button" onClick={() => {
-          if (window.confirm("Reset draft?")) {
-            updateDraftState([], {}, {});
-            setRedoStack([]);
-          }
-        }}>Reset Draft</button>
-        <button className="undo-button" onClick={() => {
-          if (draftedTeams.length > 0) {
-            const updated = draftedTeams.slice(0, -1);
-            setRedoStack([...redoStack, draftedTeams.at(-1)]);
-            updateDraftState(updated);
-          }
-        }}>Undo Pick</button>
-        <button className="redo-button" onClick={() => {
-          if (redoStack.length > 0) {
-            const next = redoStack.at(-1);
-            updateDraftState([...draftedTeams, next]);
-            setRedoStack(redoStack.slice(0, -1));
-          }
-        }}>Redo Pick</button>
-      </div>
-
       <h2>Final Draft Summary</h2>
       <table className="draft-summary">
         <thead>
@@ -220,25 +167,36 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {draftOrder.map(drafter => (
+          {[...draftOrder].sort((a, b) => {
+            const getTotal = (drafter) => {
+              const scoresArr = [0, 1, 2].map(i => {
+                const val = parseFloat(scores[`${drafter}_${i}`]);
+                return isNaN(val) ? null : val;
+              }).filter(n => n !== null);
+              if (scoresArr.length < 2) return Infinity;
+              return scoresArr.sort((x, y) => x - y).slice(0, 2).reduce((a, b) => a + b, 0);
+            };
+            return getTotal(a) - getTotal(b);
+          }).map((drafter) => (
             <tr key={drafter}>
               <td><strong>{drafter}</strong></td>
-              {[0, 1, 2].map(i => {
-                const key = `${drafter}_${i}`;
+              {[0, 1, 2].map((pickIdx) => {
+                const key = `${drafter}_${pickIdx}`;
                 const isEditing = editingCell === key;
-                const pick = draftedByDrafter[drafter]?.[i];
-                const raw = overrides[key] || (pick?.team || '');
-                const name = draftComplete ? stripOdds(raw) : raw;
+                const pick = draftedByDrafter[drafter]?.[pickIdx];
+                const rawName = overrides[key] || (pick ? pick.team : '');
+                const name = draftComplete ? stripOdds(rawName) : rawName;
+                const score = scores[key] || '';
                 return (
-                  <td key={i}>
-                    <div onClick={() => handleOverrideEdit(drafter, i)}>
+                  <td key={pickIdx}>
+                    <div onClick={() => handleOverrideEdit(drafter, pickIdx)}>
                       {isEditing ? (
                         <input
+                          className="override-input"
                           value={editValue}
                           onChange={(e) => setEditValue(e.target.value)}
-                          onBlur={() => handleOverrideSave(drafter, i)}
-                          onKeyDown={(e) => e.key === 'Enter' && handleOverrideSave(drafter, i)}
-                          className="override-input"
+                          onBlur={() => handleOverrideSave(drafter, pickIdx)}
+                          onKeyDown={(e) => e.key === 'Enter' && handleOverrideSave(drafter, pickIdx)}
                           autoFocus
                         />
                       ) : name}
@@ -247,8 +205,8 @@ function App() {
                       <input
                         className="override-input"
                         placeholder="Score"
-                        value={scores[key] || ''}
-                        onChange={(e) => handleScoreChange(drafter, i, e.target.value)}
+                        value={score}
+                        onChange={(e) => handleScoreChange(drafter, pickIdx, e.target.value)}
                       />
                     </div>
                   </td>
