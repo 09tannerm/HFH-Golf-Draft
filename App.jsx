@@ -131,6 +131,18 @@ function App() {
     const total = all.slice(0, 2).reduce((a, b) => a + b, 0);
     return total > 0 ? `+${total}` : `${total}`;
   };
+  const sortedDraftOrder = [...draftOrder].sort((a, b) => {
+    const getTotal = (drafter) => {
+      const scoresArr = [0, 1, 2].map(i => {
+        const val = parseFloat(scores[`${drafter}_${i}`]);
+        return isNaN(val) ? null : val;
+      }).filter(n => n !== null);
+      if (scoresArr.length < 2) return Infinity;
+      return scoresArr.sort((x, y) => x - y).slice(0, 2).reduce((a, b) => a + b, 0);
+    };
+    return getTotal(a) - getTotal(b);
+  });
+
 
   const handleCopyDraftSummary = () => {
     let summary = `Draft Results for ${eventName}:\n\n`;
