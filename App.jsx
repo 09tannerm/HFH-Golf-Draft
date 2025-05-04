@@ -220,7 +220,7 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {draftOrder.map(drafter => (
+          {sortedDraftOrder.map(drafter => (
             <tr key={drafter}>
               <td><strong>{drafter}</strong></td>
               {[0, 1, 2].map(i => {
