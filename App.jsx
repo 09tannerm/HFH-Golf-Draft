@@ -122,15 +122,15 @@ function App() {
   };
 
   const calculateBestTwoTotal = (drafter) => {
-    const all = [0, 1, 2].map(i => {
-      const val = parseFloat(scores[`${drafter}_${i}`]);
-      return isNaN(val) ? null : val;
-    }).filter(n => n !== null);
-    if (all.length < 2) return '';
-    all.sort((a, b) => a - b);
-    const total = all.slice(0, 2).reduce((a, b) => a + b, 0);
-    return total > 0 ? `+${total}` : `${total}`;
-  };
+  const all = [0, 1, 2].map(i => {
+    const val = parseFloat(scores[`${drafter}_${i}`]);
+    return isNaN(val) ? null : val;
+  }).filter(n => n !== null);
+  if (all.length < 2) return 'CUT';
+  all.sort((a, b) => a - b);
+  const total = all.slice(0, 2).reduce((a, b) => a + b, 0);
+  return total > 0 ? `+${total}` : `${total}`;
+};
   const sortedDraftOrder = [...draftOrder].sort((a, b) => {
     const getTotal = (drafter) => {
       const scoresArr = [0, 1, 2].map(i => {
