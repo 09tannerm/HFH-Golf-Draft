@@ -1,157 +1,64 @@
 Golfer,Odds
-Scottie Scheffler,300
-Jordan Spieth,2000
-Sungjae Im,2500
-Byeong-Hun An,2800
-Sam Burns,3000
-Taylor Pendrith,3300
-Si Woo Kim,3300
-Stephan Jaeger,4000
-Ben Griffin,4500
-Mackenzie Hughes,4500
-Jacob Bridgeman,5000
-Will Zalatoris,5000
-Rasmus Hojgaard,5000
-Jake Knapp,6000
-Joohyung Kim,6000
-Ryan Gerard,6500
-Nicolai Hojgaard,6600
-Taylor Moore,6600
-Ryo Hisatsune,7500
-Seamus Power,7500
-Rico Hoey,8000
-Alex Smalley,8000
-Matt Wallace,8000
-Eric Cole,8000
-Michael Thorbjornsen,8000
-Thorbjorn Olesen,8000
-Isaiah Salinda,8000
-Sam Stevens,8000
-Harry Hall,8000
-Kevin Yu,8000
-Austin Eckroat,9000
-Gary Woodland,9000
-Alejandro Tosti,9000
-Doug Ghim,10000
-Matt Kuchar,10000
-Jesper Svensson,10000
-Kurt Kitayama,10000
-Lee Hodges,10000
-Joe Highsmith,10000
-Chan Kim,10000
-Sami Valimaki,10000
-Matt McCarty,10000
-Patrick Rodgers,10000
-Joel Dahmen,11000
-Ryan Fox,10000
-Henrik Norlander,12000
-Davis Riley,12000
-Charley Hoffman,12500
-Karl Vilips,12500
-Vincent Whaley,12500
-Patrick Fishburn,12500
-Victor Perez,12500
-Max McGreevy,12500
-Nico Echavarria,12500
-Christopher Gotterup,12500
-Sam Ryder,12500
-Justin Lower,12500
-Niklas Norgaard Mller,12500
-Cam Davis,12500
-Quade Cummins,15000
-Zach Johnson,15000
-Ricky Castillo,15000
-Pierceson Coody,15000
-Matti Schmid,15000
-Beau Hossler,15000
-Andrew Putnam,17500
-Hayden Springer,17500
-Takumi Kanaya,17500
-Emiliano Grillo,17500
-Mac Meissner,20000
-Mark Hubbard,20000
-Trey Mullinax,20000
-Carson Young,20000
-Chad Ramey,20000
-Jeremy Paul,20000
-Jhonattan Vegas,20000
-Adam Svensson,20000
-Kevin Roy,20000
-Greyson Sigg,22000
-Joseph Bramlett,22500
-Antoine Rozner,22500
-Aldrich Potgieter,22500
-Chandler Phillips,22500
-Dylan Wu,25000
-Trace Crowe,25000
-Christo Lamprecht,25000
-Luke List,25000
-Danny Walker,25000
-Erik van Rooyen,25000
-Thomas Rosenmueller,25000
-Brian Campbell,27000
-Adam Schenk,30000
-Kristoffer Ventura,30000
-Ben Martin,30000
-Ben Kohles,30000
-Rikuya Hoshino,30000
-Matteo Manassero,35000
-Brice Garnett,35000
-Nate Lashley,35000
-Lanto Griffin,35000
-Webb Simpson,35000
-William Mouw,35000
-Ben Silverman,40000
-Nick Hardy,40000
-Taylor Montgomery,40000
-Matthew Nesmith,40000
-Tommy Morrison,50000
-Patton Kizzire,50000
-Frankie Capan III,50000
-William Gordon,50000
-Kevin Tway,50000
-Noah Goodwin,50000
-Zac Blair,50000
-Jackson Suber,50000
-Tim Widing,50000
-Kevin Velo,50000
-David Skinns,60000
-Martin Laird,60000
-Bobby Massa,60000
-Ross Steelman,60000
-Francesco Molinari,60000
-Brandt Snedeker,60000
-Harry Higgs,60000
-Braden Thornberry,75000
-Taylor Dickson,75000
-Norman Xiong,75000
-Chez Reavie,75000
-John Pak,75000
-David Lipsky,75000
-Paul Peterson,100000
-Mason Andersen,100000
-Hayden Buckley,100000
-Matthew Riedel,100000
-Chesson Hadley,100000
-Kaito Onishi,100000
-Rafael Campos,100000
-Nelson Ledesma,100000
-Harrison Endycott,100000
-Camilo Villegas,100000
-Trevor Cone,100000
-Peter Malnati,100000
-Will Chandler,150000
-Aaron Baddeley,150000
-Paul Waring,150000
-Cristobal Del Solar,150000
-Kris Kim,150000
-Anders Albertson,200000
-Sung Kang,250000
-Ryan Palmer,250000
-Philip Knowles,250000
-Noah Kent,250000
-Nick Watney,250000
-Scott Gutschewski,250000
-Kevin Kisner,250000
-Seungbin Choi,300000
-Brandon Matthews,500000
+Rory McIlroy ,400
+Collin Morikawa ,1400
+Xander Schauffele ,1600
+Ludvig Aberg ,1600
+Justin Thomas ,1800
+Patrick Cantlay ,2000
+Viktor Hovland ,2800
+Tommy Fleetwood ,2800
+Jordan Spieth ,2800
+Russell Henley ,3000
+Hideki Matsuyama ,3000
+Corey Conners ,3000
+Shane Lowry ,3500
+Sepp Straka ,4000
+Daniel Berger ,4000
+Wyndham Clark ,4500
+Sungjae Im ,4500
+Robert MacIntyre ,4500
+Maverick McNealy ,4500
+Keegan Bradley ,4500
+Sam Burns ,5000
+Min Woo Lee ,5000
+Jason Day ,5000
+Taylor Pendrith ,5500
+JJ Spaun ,5500
+Denny McCarthy ,5500
+Davis Thompson ,5500
+Byeong Hun An ,5500
+Tony Finau ,6000
+Michael Kim ,6000
+Keith Mitchell ,6000
+Si Woo Kim ,6500
+Justin Rose ,6500
+Andrew Novak ,6500
+Aaron Rai ,6500
+Will Zalatoris ,7000
+Brian Harman ,7000
+Akshay Bhatia ,7000
+J.T. Poston ,7500
+Ben Griffin ,7500
+Stephan Jaeger ,9000
+Sam Stevens ,9000
+Sahith Theegala ,9000
+Max Homa ,9000
+Harris English ,9000
+Thomas Detry ,10000
+Rasmus Hojgaard ,10000
+Max Greyserman ,10000
+Matt Fitzpatrick ,10000
+Lucas Glover ,10000
+Christiaan Bezuidenhout ,10000
+Tom Hoge ,11000
+Ryan Gerard ,11000
+Jacob Bridgeman ,11000
+Adam Scott ,11000
+Rickie Fowler ,12000
+Nick Taylor ,12000
+Michael Thorbjornsen ,12000
+Gary Woodland ,12000
+Eric Cole ,12000
+Cameron Young ,12000
+Chris Kirk ,15000
+Austin Eckroat ,15000
