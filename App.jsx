@@ -12,6 +12,7 @@ function App() {
   const [round, setRound] = useState(1);
   const [draftComplete, setDraftComplete] = useState(false);
   const [eventName, setEventName] = useState("This Week's Event");
+  const picksPerDrafter = /Masters|PGA|US Open|Open Championship|The Open/i.test(eventName) ? 5 : 3;
   const [standings, setStandings] = useState([]);
   const [overrides, setOverrides] = useState({});
   const [scores, setScores] = useState({});
@@ -86,7 +87,7 @@ function App() {
       setCurrentPickIndex(0);
       setRound(1);
     }
-    setDraftComplete(draftedTeams.length === draftOrder.length * 3);
+    setDraftComplete(draftedTeams.length === draftOrder.length * picksPerDrafter);
   }, [draftedTeams, draftOrder]);
 
   const stripOdds = (name) => name.replace(/\s*\(\+?\d+\)/g, '').trim();
@@ -122,7 +123,7 @@ function App() {
   };
 
   const calculateBestTwoTotal = (drafter) => {
-  const all = [0, 1, 2].map(i => {
+  const all = Array.from({ length: picksPerDrafter }, (_, i) => i).map(i => {
     const val = parseFloat(scores[`${drafter}_${i}`]);
     return isNaN(val) ? null : val;
   }).filter(n => n !== null);
@@ -133,7 +134,7 @@ function App() {
 };
   const sortedDraftOrder = [...draftOrder].sort((a, b) => {
     const getTotal = (drafter) => {
-      const scoresArr = [0, 1, 2].map(i => {
+      const scoresArr = Array.from({ length: picksPerDrafter }, (_, i) => i).map(i => {
         const val = parseFloat(scores[`${drafter}_${i}`]);
         return isNaN(val) ? null : val;
       }).filter(n => n !== null);
@@ -235,7 +236,7 @@ function App() {
           {sortedDraftOrder.map(drafter => (
             <tr key={drafter}>
               <td><strong>{drafter}</strong></td>
-              {[0, 1, 2].map(i => {
+              {Array.from({ length: picksPerDrafter }, (_, i) => i).map(i => {
                 const key = `${drafter}_${i}`;
                 const isEditing = editingCell === key;
                 const pick = draftedByDrafter[drafter]?.[i];
