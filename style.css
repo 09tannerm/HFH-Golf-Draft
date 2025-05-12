@@ -1,7 +1,9 @@
 
+/* PGA Championship Theme - Quail Hollow Edition */
+
 body {
   font-family: 'Georgia', serif;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/e/e7/Quail_Hollow_Club_18th_Hole.jpg') no-repeat center center fixed;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/4/4f/Quail_Hollow_Club_18th_Hole.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #002b36;
   margin: 0;
@@ -9,33 +11,48 @@ body {
 }
 
 .app {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
   background-color: rgba(255, 255, 255, 0.95);
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 43, 54, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
 }
 
 h1 {
   text-align: center;
-  font-size: 2.5rem;
-  color: #003366;
-  margin-bottom: 0.5rem;
+  font-size: 2.8rem;
+  color: #002f6c;
+  margin-bottom: 0.25rem;
 }
 
-h2 {
+h1::before {
+  content: '🏌️';
+  margin-right: 10px;
+}
+
+h2.event-name {
   text-align: center;
-  color: #005c1c;
-  margin-top: 0;
+  font-size: 1.8rem;
+  color: #0b6623;
+  margin-top: 0.25rem;
+}
+
+h3 {
+  color: #003f5c;
+  font-weight: bold;
+}
+
+ul {
+  padding-left: 1.25rem;
 }
 
 button {
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: 6px;
   border: none;
-  margin: 0.2rem;
+  margin: 0.3rem;
   cursor: pointer;
 }
 
@@ -46,24 +63,24 @@ button {
 
 .undo-button,
 .redo-button {
-  background-color: #003366;
+  background-color: #002f6c;
   color: white;
 }
 
 .copy-button {
   margin-top: 1rem;
-  background-color: #005c1c;
+  background-color: #006400;
   color: white;
 }
 
 .team-button {
   background-color: #007f5f;
   color: white;
-  margin: 0.2rem;
-  padding: 0.5rem 1rem;
+  margin: 0.3rem;
+  padding: 0.5rem 1.2rem;
   border-radius: 6px;
+  font-weight: bold;
   border: none;
-  cursor: pointer;
 }
 
 .team-button:hover {
@@ -74,27 +91,30 @@ button {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1.5rem;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .draft-summary th,
 .draft-summary td {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   padding: 0.75rem;
   text-align: center;
 }
 
 .draft-summary th {
-  background-color: #e6e6e6;
-  color: #003366;
+  background-color: #f3f3f3;
+  color: #002f6c;
+  font-weight: bold;
 }
 
 .draft-summary tbody tr:nth-child(odd) {
-  background-color: #f0f8f0;
+  background-color: #f0fff0;
 }
 
 .draft-complete-banner {
-  background-color: #002b36;
+  background-color: #002f6c;
   color: gold;
   font-weight: bold;
   text-align: center;
@@ -108,4 +128,15 @@ button {
   padding: 0.25rem;
   font-size: 1rem;
   box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.standings {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
 }
