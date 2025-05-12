@@ -163,17 +163,16 @@ function App() {
 
   return (
     <div className="app">
-      
+        
   <div className="hero-banner">
     <h2 className="hero-title">🏌️ 2025 PGA Championship</h2>
     <p className="hero-subtitle">Quail Hollow Club — Charlotte, North Carolina</p>
     <img
       className="course"
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Quail_Hollow_Club_-_18th_Green.jpg/800px-Quail_Hollow_Club_-_18th_Green.jpg"
+      src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Quail_Hollow_Club_18th_Hole.jpg"
       alt="Quail Hollow Course"
     />
   </div>
-
 <h1>🏌️ HFH Golf Draft</h1>
       <h2>⛳ {eventName}</h2>
 
@@ -188,7 +187,14 @@ function App() {
         </div>
       )}
 
-      {draftComplete && <div className="draft-complete-banner">🎉 Draft Complete! 🏆</div>}
+      {draftComplete && <div className="draft-complete-banner">
+  🎉 Draft Complete! 🏆
+  <img
+    className="trophy"
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Wanamaker_Trophy_2013.jpg/220px-Wanamaker_Trophy_2013.jpg"
+    alt="Wanamaker Trophy"
+  />
+</div>}
 
       {!draftComplete && (
         <>
