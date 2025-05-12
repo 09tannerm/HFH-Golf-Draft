@@ -1,4 +1,3 @@
-
 /* PGA Championship Theme - Quail Hollow Edition */
 
 body {
@@ -162,4 +161,24 @@ button {
   font-size: 1.1rem;
   color: #f8e07e;
   font-family: 'Georgia', serif;
+}
+
+.hero-banner::after {
+  content: '';
+  display: block;
+  height: 200px;
+  margin-top: 1rem;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/4/4f/Quail_Hollow_Club_18th_Hole.jpg') center/cover no-repeat;
+  border-radius: 8px;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
+}
+
+.draft-complete-banner::after {
+  content: '';
+  display: inline-block;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Wanamaker_Trophy_2013.jpg/220px-Wanamaker_Trophy_2013.jpg') center/contain no-repeat;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  vertical-align: middle;
 }
