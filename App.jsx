@@ -163,7 +163,11 @@ function App() {
 
   return (
     <div className="app">
-      <h1>🏌️ HFH Golf Draft</h1>
+        <div className="hero-banner">
+    <h2 className="hero-title">🏌️ 2025 PGA Championship</h2>
+    <p className="hero-subtitle">Quail Hollow Club — Charlotte, North Carolina</p>
+  </div>
+<h1>🏌️ HFH Golf Draft</h1>
       <h2>⛳ {eventName}</h2>
 
       {standings.length > 0 && (
