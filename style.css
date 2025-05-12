@@ -1,9 +1,9 @@
-/* PGA Championship Theme - Quail Hollow Edition */
+
+/* PGA Championship Theme - Quail Hollow Edition (Enhanced) */
 
 body {
   font-family: 'Georgia', serif;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/4/4f/Quail_Hollow_Club_18th_Hole.jpg') no-repeat center center fixed;
-  background-size: cover;
+  background: #e6f2e6;
   color: #002b36;
   margin: 0;
   padding: 0;
@@ -12,10 +12,41 @@ body {
 .app {
   max-width: 1200px;
   margin: auto;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.97);
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+.hero-banner {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: linear-gradient(to right, #003366, #0b6623);
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.hero-banner img.course {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  margin-top: 1rem;
+  border-radius: 10px;
+}
+
+.hero-title {
+  font-size: 2rem;
+  margin: 0;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+}
+
+.hero-subtitle {
+  margin-top: 0.25rem;
+  font-size: 1.1rem;
+  color: #f8e07e;
 }
 
 h1 {
@@ -23,11 +54,6 @@ h1 {
   font-size: 2.8rem;
   color: #002f6c;
   margin-bottom: 0.25rem;
-}
-
-h1::before {
-  content: '🏌️';
-  margin-right: 10px;
 }
 
 h2.event-name {
@@ -122,6 +148,13 @@ button {
   border-radius: 8px;
 }
 
+.draft-complete-banner img.trophy {
+  width: 40px;
+  height: auto;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
 .override-input {
   width: 100%;
   padding: 0.25rem;
@@ -138,47 +171,4 @@ button {
   margin: 1rem auto;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   max-width: 500px;
-}
-.hero-banner {
-  text-align: center;
-  margin-bottom: 1rem;
-  padding: 1.2rem;
-  background: linear-gradient(to right, #003366, #0b6623);
-  color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.hero-title {
-  font-size: 2rem;
-  margin: 0;
-  font-family: 'Georgia', serif;
-  font-weight: bold;
-}
-
-.hero-subtitle {
-  margin-top: 0.25rem;
-  font-size: 1.1rem;
-  color: #f8e07e;
-  font-family: 'Georgia', serif;
-}
-
-.hero-banner::after {
-  content: '';
-  display: block;
-  height: 200px;
-  margin-top: 1rem;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/4/4f/Quail_Hollow_Club_18th_Hole.jpg') center/cover no-repeat;
-  border-radius: 8px;
-  box-shadow: inset 0 0 30px rgba(0,0,0,0.4);
-}
-
-.draft-complete-banner::after {
-  content: '';
-  display: inline-block;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Wanamaker_Trophy_2013.jpg/220px-Wanamaker_Trophy_2013.jpg') center/contain no-repeat;
-  width: 40px;
-  height: 40px;
-  margin-left: 10px;
-  vertical-align: middle;
 }
