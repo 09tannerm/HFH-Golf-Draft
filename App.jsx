@@ -226,9 +226,9 @@ function App() {
         <thead>
           <tr>
             <th>Drafter</th>
-            <th>Pick 1</th>
-            <th>Pick 2</th>
-            <th>Pick 3</th>
+            {Array.from({ length: picksPerDrafter }, (_, i) => (
+              <th key={`pick${i + 1}`}>{`Pick ${i + 1}`}</th>
+            ))}
             <th>Total</th>
           </tr>
         </thead>
