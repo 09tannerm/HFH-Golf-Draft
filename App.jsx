@@ -165,14 +165,8 @@ function App() {
     <div className="app">
         
   <div className="hero-banner">
-    <h2 className="hero-title">🏌️ 2025 PGA Championship</h2>
-    <p className="hero-subtitle">Quail Hollow Club — Charlotte, North Carolina</p>
-    <img
-      className="course"
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Quail_Hollow_Club_-_18th_Green.jpg/800px-Quail_Hollow_Club_-_18th_Green.jpg"
-      alt="Quail Hollow Course"
-    />
-  </div>
+  <h2 className="hero-title">🏌️ {eventName}</h2>
+</div>
 <h1>🏌️ HFH Golf Draft</h1>
       <h2>⛳ {eventName}</h2>
 
