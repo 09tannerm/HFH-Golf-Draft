@@ -1,76 +1,156 @@
 Golfer,Odds
-Collin Morikawa ,1200
-Keegan Bradley ,1600
-Patrick Cantlay ,1800
-Ben Griffin ,2200
-Cameron Young ,2800
-Hideki Matsuyama ,3000
-Harry Hall ,3000
-Si Woo Kim ,3500
-Keith Mitchell ,3500
-Max Greyserman ,3500
-Luke Clanton ,4000
-Wyndham Clark ,4000
-Rickie Fowler ,4000
-Akshay Bhatia ,4500
-Davis Thompson ,4500
-Rasmus Hojgaard ,4500
-Min Woo Lee ,4500
-Matt Fitzpatrick ,5000
-Chris Gotterup ,5000
-Alex Smalley ,5000
-Thorbjorn Olesen ,5500
-Taylor Moore ,5500
-Ryan Gerard ,5500
-Alex Noren ,5500
-Michael Kim ,6000
-Matt Wallace ,6000
-Kurt Kitayama ,6500
-Stephan Jaeger ,6500
-Byeong Hun An ,6500
-Nicolai Hojgaard ,7000
-Tom Kim ,7500
-Emiliano Grillo ,7500
-Michael Thorbjornsen ,7500
-Max Homa ,7500
-Jesper Svensson ,8000
-Jake Knapp ,8000
-Jacob Bridgeman ,8000
-Vince Whaley ,8000
-Victor Perez ,8000
-Ryo Hisatsune ,8000
-Rico Hoey ,8000
-Chris Kirk ,8000
-Cam Davis ,8000
-Mark Hubbard ,9000
-Davis Riley ,9000
-Patrick Rodgers ,9000
-Nico Echavarria ,9000
-Erik Van Rooyen ,10000
-Lee Hodges ,10000
-Gary Woodland ,10000
-Seamus Power ,10000
-Matt McCarty ,11000
-Aldrich Potgieter ,11000
-Kevin Roy ,11000
-Sam Ryder ,11000
-Ricky Castillo ,11000
-Cameron Champ ,11000
-Isaiah Salinda ,12000
-Trey Mullinax ,12000
-Thriston Lawrence ,12000
-Steven Fisk ,12000
-Patrick Fishburn ,12000
-Beau Hossler ,12000
-Antoine Rozner ,12000
-Max McGreevy ,12000
-Andrew Putnam ,12000
-Matt Kuchar ,15000
-Karl Vilips ,15000
-Webb Simpson ,15000
-Henrik Norlander ,15000
-Doug Ghim ,15000
-Sami Valimaki ,15000
-Quade Cummins ,15000
-Carson Young ,15000
-Austin Eckroat ,15000
+B. Griffin,+1600
+J. Day,+2500
+D. McCarthy,+3000
+J. Poston,+3300
+S. Kim,+3300
+S. Im,+3500
+C. Kirk,+3500
+D. Thompson,+3500
+L. Clanton,+4000
+L. Glover,+4000
+M. Thorbjornsen,+4000
+J. Knapp,+4000
+P. Coody,+4000
+K. Yu,+4000
+S. Stevens,+4500
+C. Gotterup,+4500
+B. Cauley,+4500
+T. Olesen,+5000
+M. Kim,+5000
+A. Smalley,+5000
+R. Gerard,+5000
+A. Potgieter,+5000
+R. Fowler,+5500
+M. Hubbard,+5500
+K. Kitayama,+5500
+K. Mitchell,+5500
+A. Putnam,+6500
+S. Jaeger,+6600
+N. Echavarria,+6600
+V. Perez,+7000
+J. Bridgeman,+7000
+E. Grillo,+7000
+K. Roy,+7000
+T. Moore,+7000
+C. Bezuidenhout,+7500
+V. Whaley,+8000
+T. Lawrence,+8000
+J. Kim,+8000
+R. Hisatsune,+8000
+R. Hoey,+8000
+M. McCarty,+8000
+L. Hodges,+8000
+E. Cole,+9000
+J. Svensson,+9000
+S. Power,+10000
+P. Rodgers,+10000
+C. Champ,+10000
+I. Salinda,+10000
+D. Ghim,+11000
+M. Homa,+11000
+S. Välimäki,+11000
+A. Eckroat,+11000
+M. McGreevy,+12500
+C. Phillips,+12500
+S. Ryder,+12500
+R. Castillo,+12500
+J. Suber,+12500
+D. Riley,+12500
+M. Kuchar,+12500
+S. Fisk,+15000
+P. Fishburn,+15000
+B. Hossler,+15000
+Q. Cummins,+15000
+J. Bramlett,+15000
+J. Highsmith,+15000
+Z. Johnson,+17500
+H. Norlander,+17500
+J. Koivun,+17500
+D. Walker,+18000
+T. Mullinax,+20000
+C. Young,+20000
+G. Higgo,+20000
+C. Kim,+20000
+K. Ventura,+20000
+K. Vilips,+20000
+A. Hadwin,+20000
+J. Dahmen,+25000
+H. Springer,+25000
+C. Ramey,+25000
+A. Tosti,+25000
+A. Svensson,+25000
+A. Schenk,+25000
+T. Crowe,+25000
+T. Rosenmuller,+25000
+B. James,+25000
+W. Mouw,+27500
+T. Kanaya,+30000
+R. Hoshino,+30000
+N. Hardy,+30000
+M. Meissner,+30000
+L. List,+30000
+J. Paul,+30000
+G. Sigg,+30000
+T. Rosenmueller,+35000
+B. Garnett,+35000
+L. Griffin,+40000
+W. Gordon,+40000
+N. Lashley,+40000
+J. Lower,+40000
+H. Higgs,+40000
+D. Wu,+40000
+B. Silverman,+40000
+B. Martin,+40000
+B. Kohles,+40000
+M. Laird,+45000
+D. Willett,+45000
+N. Xiong,+45000
+T. Montgomery,+50000
+B. Campbell,+50000
+T. Cone,+50000
+P. Kizzire,+50000
+N. Goodwin,+50000
+D. Skinns,+50000
+M. NeSmith,+50000
+T. Widing,+60000
+J. Pak,+60000
+H. Buckley,+60000
+D. Frittelli,+60000
+B. Snedeker,+60000
+G. Sargent,+60000
+K. Velo,+60000
+C. Hadley,+60000
+N. Dunlap,+60000
+Z. Blair,+75000
+P. Knowles,+75000
+N. Lindheim,+75000
+P. Peterson,+75000
+A. Wise,+75000
+B. Valdes,+75000
+C. Del Solar,+100000
+P. Waring,+100000
+J. Hahn,+100000
+P. Malnati,+100000
+D. Lipsky,+100000
+D. Ford,+100000
+C. Villegas,+100000
+F. Capan III,+100000
+T. Dickson,+100000
+P. Summerhays,+100000
+W. Chandler,+100000
+H. Endycott,+100000
+M. Andersen,+100000
+K. Onishi,+100000
+M. Riedel,+100000
+R. Campos,+100000
+A. Baddeley,+100000
+B. Burgoon,+150000
+B. Thornberry,+150000
+A. Albertson,+150000
+A. Cook,+250000
+K. Kisner,+250000
+R. Palmer,+300000
+B. Matthews,+500000
+J. Giannetto,+500000
+K. Stanley,+500000
