@@ -1,156 +1,152 @@
 Golfer,Odds
-Scottie Scheffler ,450
-Rory McIlroy ,700
-Jon Rahm ,1200
-Bryson DeChambeau ,1800
-Collin Morikawa ,2500
-Xander Schauffele ,2500
-Tommy Fleetwood ,2500
-Tyrrell Hatton ,2800
-Ludvig Aberg ,2800
-Viktor Hovland ,3000
-Shane Lowry ,3000
-Robert MacIntyre ,3000
-Joaquin Niemann ,4000
-Justin Thomas ,4500
-Jordan Spieth ,4500
-Brooks Koepka ,5000
-Patrick Cantlay ,5000
-Matt Fitzpatrick ,5000
-Sepp Straka ,6000
-Russell Henley ,6000
-Chris Gotterup ,7000
-Sam Burns ,7000
-Corey Conners ,7500
-Cameron Young ,7500
-Adam Scott ,7500
-Ben Griffin ,7500
-Hideki Matsuyama ,7500
-Si Woo Kim ,8000
-Patrick Reed ,8000
-Keegan Bradley ,8000
-Justin Rose ,8000
-Jason Day ,8000
-Ryan Fox ,9000
-Min Woo Lee ,9000
-J.J. Spaun ,9000
-Bud Cauley ,9000
-Harry Hall ,10000
-Michael Kim ,10000
-Harris English ,10000
-Aaron Rai ,11000
-Cameron Smith ,12000
-Brian Harman ,12000
-Sungjae Im ,12000
-Maverick McNealy ,12000
-Carlos Ortiz ,12000
-Daniel Berger ,12000
-Wyndham Clark ,13000
-Tony Finau ,13000
-Max Greyserman ,13000
-Dean Burmester ,15000
-Tom Kim ,15000
-Sergio Garcia ,15000
-Rickie Fowler ,15000
-Rasmus Hojgaard ,15000
-Taylor Pendrith ,15000
-Louis Oosthuizen ,15000
-Denny McCarthy ,17000
-Davis Thompson ,17000
-Byeong Hun An ,17000
-Akshay Bhatia ,17000
-Kevin Yu ,17000
-Tom McKibbin ,17000
-Thorbjorn Olesen ,17000
-Thomas Detry ,17000
-Nicolai Hojgaard ,17000
-Nick Taylor ,17000
-Marco Penge ,17000
-Matt Wallace ,17000
-Dustin Johnson ,20000
-Chris Kirk ,20000
-Marc Leishman ,20000
-Lucas Herbert ,20000
-Thriston Lawrence ,20000
-Niklas Norgaard ,20000
-Jordan Smith ,20000
-J.T. Poston ,20000
-Andrew Novak ,20000
-Aldrich Potgieter ,20000
-Christiaan Bezuidenhout ,25000
-Lucas Glover ,25000
-Daniel Brown ,25000
-Nico Echavarria ,25000
-Jesper Svensson ,30000
-Padraig Harrington ,30000
-Stephan Jaeger ,30000
-Matthew Jordan ,30000
-Mackenzie Hughes ,30000
-Matthias Schmid ,30000
-Laurie Canter ,35000
-Martin Couvra ,35000
-Tom Hoge ,35000
-Jhonattan Vegas ,35000
-Matteo Manassero ,35000
-Kristoffer Reitan ,40000
-Haotong Li ,40000
-Sahith Theegala ,40000
-Matt McCarty ,40000
-Phil Mickelson ,40000
-Daniel Hillier ,50000
-Lee Westwood ,50000
-Adrien Saddier ,50000
-Antoine Rozner ,50000
-Brian Campbell ,50000
-Shaun Norris ,60000
-John Parry ,60000
-Zach Johnson ,60000
-Matthieu Pavon ,60000
-Jason Kokrak ,70000
-Takumi Kanaya ,70000
-Henrik Stenson ,70000
-Stewart Cink ,70000
-Julien Guerrier ,70000
-John Catlin ,70000
-Francesco Molinari ,80000
-Rikuya Hoshino ,80000
-Romain Langasque ,80000
-Oliver Lindell ,90000
-Guido Migliozzi ,100000
-Daniel van Tonder ,100000
-Nathan Kimsey ,100000
-Jacob Skov Olesen ,100000
-Ethan Fang ,100000
-Sebastian Soderberg ,100000
-Sadom Kaewkanjana ,100000
-Elvis Smylie ,150000
-Paul Waring ,150000
-Justin Suh ,150000
-Curtis Luck ,150000
-Justin Walters ,200000
-Filip Jakubcik ,200000
-Dylan Naidoo ,250000
-Darren Fichardt ,250000
-Riki Kawamoto ,250000
-Darren Clarke ,250000
-Younghan Song ,250000
-Ryggs Johnston ,250000
-Ryan Peake ,250000
-Seb Cave ,250000
-Richard Teder ,250000
-K.J. Choi ,250000
-Justin Leonard ,250000
-John Axelsen ,250000
-George Bloor ,250000
-Justin Hastings ,250000
-Daniel Young ,250000
-Connor Graham ,250000
-Shugo Imahira ,250000
-Cameron Adam ,250000
-Angel Hidalgo ,250000
-Mikiya Akutsu ,250000
-Sampson Yunhe Zheng ,500000
-OJ Farrell ,500000
-Jesper Sandborg ,500000
-Frazer Jones ,500000
-Curtis Knipes ,500000
+S. Burns,+1600
+M. McNealy,+2000
+W. Clark,+2500
+C. Gotterup,+2800
+T. Pendrith,+3300
+M. Greyserman,+3300
+R. Fowler,+4000
+T. Finau,+4000
+D. Thompson,+4000
+J. Knapp,+4000
+K. Kitayama,+4000
+S. Im,+4000
+M. Thorbjornsen,+4000
+S. Kim,+4000
+E. Grillo,+4500
+M. Homa,+4500
+A. Bhatia,+4500
+A. Scott,+4500
+K. Mitchell,+5000
+L. Clanton,+5500
+K. Yu,+5500
+N. Norgaard Moller,+6000
+R. Hoey,+6000
+J. Bridgeman,+6000
+M. Schmid,+6500
+J. Svensson,+6600
+S. Stevens,+6600
+S. Theegala,+6600
+P. Fishburn,+6600
+M. Wallace,+6600
+L. Hodges,+6600
+J. Vegas,+6600
+C. Champ,+6600
+A. Smalley,+6600
+H. Li,+7000
+V. Whaley,+7000
+P. Coody,+7500
+A. Noren,+7500
+K. Roy,+8000
+T. Moore,+8000
+E. van Rooyen,+9000
+J. Kim,+9000
+T. Olesen,+9000
+D. Ghim,+9000
+B. An,+9000
+M. McCarty,+9000
+T. Hoge,+10000
+S. Jaeger,+10000
+M. Hughes,+10000
+C. Davis,+10000
+A. Eckroat,+10000
+C. Bezuidenhout,+10000
+G. Woodland,+10000
+B. Hossler,+10000
+C. Kirk,+11000
+V. Perez,+11000
+E. Cole,+12500
+W. Mouw,+12500
+P. Rodgers,+12500
+D. Riley,+12500
+A. Rozner,+12500
+A. Putnam,+12500
+H. Springer,+12500
+M. Hubbard,+12500
+J. Suber,+15000
+S. Välimäki,+15000
+R. Hisatsune,+15000
+S. Ryder,+15000
+W. Simpson,+17500
+G. Higgo,+17500
+T. Lawrence,+17500
+R. Castillo,+20000
+M. McGreevy,+20000
+D. Lipsky,+20000
+C. Phillips,+20000
+C. Ramey,+20000
+B. Garnett,+20000
+S. Fisk,+20000
+J. Highsmith,+20000
+S. Power,+22000
+L. List,+22500
+T. Montgomery,+22500
+C. Kim,+22500
+K. Vilips,+22500
+J. Bramlett,+22500
+P. Stout,+22500
+K. Ventura,+22500
+N. Hardy,+22500
+I. Salinda,+22500
+T. Rosenmuller,+22500
+T. Rosenmueller,+25000
+R. Hoshino,+25000
+A. Hadwin,+25000
+D. Skinns,+25000
+H. Norlander,+25000
+B. Kohles,+27000
+Q. Cummins,+27500
+T. Kanaya,+27500
+A. Tosti,+27500
+C. Young,+27500
+D. Wu,+27500
+A. Svensson,+27500
+G. Sigg,+30000
+M. Meissner,+30000
+J. Paul,+30000
+W. Gordon,+30000
+A. Schenk,+30000
+M. Pavon,+30000
+J. Lower,+30000
+T. Mullinax,+35000
+N. Dunlap,+35000
+D. Walker,+35000
+G. Sargent,+35000
+B. Snedeker,+35000
+Z. Johnson,+35000
+N. Lashley,+35000
+C. Hadley,+40000
+H. Higgs,+40000
+D. Willett,+40000
+T. Cone,+40000
+L. Griffin,+40000
+J. Dahmen,+40000
+D. Ford,+40000
+B. Valdes,+50000
+B. Silverman,+50000
+P. Peterson,+50000
+H. Buckley,+60000
+P. Kizzire,+60000
+P. Malnati,+75000
+J. Pak,+75000
+N. Goodwin,+75000
+K. Kisner,+10000
+C. Villegas,+10000
+M. Riedel,+10000
+F. Capan III,+15000
+C. Del Solar,+15000
+W. Chandler,+15000
+T. Merritt,+15000
+P. Knowles,+15000
+K. Velo,+15000
+K. Onishi,+15000
+C. Reavie,+15000
+R. Campos,+20000
+H. Endycott,+20000
+A. Baddeley,+25000
+T. Dickson,+25000
+A. Albertson,+25000
+B. Thornberry,+25000
+M. Andersen,+25000
+T. Campbell,+50000
+R. Palmer,+50000
