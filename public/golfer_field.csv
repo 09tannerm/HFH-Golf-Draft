@@ -1,152 +1,56 @@
 Golfer,Odds
-S. Burns,+1600
-M. McNealy,+2000
-W. Clark,+2500
-C. Gotterup,+2800
-T. Pendrith,+3300
-M. Greyserman,+3300
-R. Fowler,+4000
-T. Finau,+4000
-D. Thompson,+4000
-J. Knapp,+4000
-K. Kitayama,+4000
-S. Im,+4000
-M. Thorbjornsen,+4000
-S. Kim,+4000
-E. Grillo,+4500
-M. Homa,+4500
-A. Bhatia,+4500
-A. Scott,+4500
-K. Mitchell,+5000
-L. Clanton,+5500
-K. Yu,+5500
-N. Norgaard Moller,+6000
-R. Hoey,+6000
-J. Bridgeman,+6000
-M. Schmid,+6500
-J. Svensson,+6600
-S. Stevens,+6600
-S. Theegala,+6600
-P. Fishburn,+6600
-M. Wallace,+6600
-L. Hodges,+6600
-J. Vegas,+6600
-C. Champ,+6600
-A. Smalley,+6600
-H. Li,+7000
-V. Whaley,+7000
-P. Coody,+7500
-A. Noren,+7500
-K. Roy,+8000
-T. Moore,+8000
-E. van Rooyen,+9000
-J. Kim,+9000
-T. Olesen,+9000
-D. Ghim,+9000
-B. An,+9000
-M. McCarty,+9000
-T. Hoge,+10000
-S. Jaeger,+10000
-M. Hughes,+10000
-C. Davis,+10000
-A. Eckroat,+10000
-C. Bezuidenhout,+10000
-G. Woodland,+10000
-B. Hossler,+10000
-C. Kirk,+11000
-V. Perez,+11000
-E. Cole,+12500
-W. Mouw,+12500
-P. Rodgers,+12500
-D. Riley,+12500
-A. Rozner,+12500
-A. Putnam,+12500
-H. Springer,+12500
-M. Hubbard,+12500
-J. Suber,+15000
-S. Välimäki,+15000
-R. Hisatsune,+15000
-S. Ryder,+15000
-W. Simpson,+17500
-G. Higgo,+17500
-T. Lawrence,+17500
-R. Castillo,+20000
-M. McGreevy,+20000
-D. Lipsky,+20000
-C. Phillips,+20000
-C. Ramey,+20000
-B. Garnett,+20000
-S. Fisk,+20000
-J. Highsmith,+20000
-S. Power,+22000
-L. List,+22500
-T. Montgomery,+22500
-C. Kim,+22500
-K. Vilips,+22500
-J. Bramlett,+22500
-P. Stout,+22500
-K. Ventura,+22500
-N. Hardy,+22500
-I. Salinda,+22500
-T. Rosenmuller,+22500
-T. Rosenmueller,+25000
-R. Hoshino,+25000
-A. Hadwin,+25000
-D. Skinns,+25000
-H. Norlander,+25000
-B. Kohles,+27000
-Q. Cummins,+27500
-T. Kanaya,+27500
-A. Tosti,+27500
-C. Young,+27500
-D. Wu,+27500
-A. Svensson,+27500
-G. Sigg,+30000
-M. Meissner,+30000
-J. Paul,+30000
-W. Gordon,+30000
-A. Schenk,+30000
-M. Pavon,+30000
-J. Lower,+30000
-T. Mullinax,+35000
-N. Dunlap,+35000
-D. Walker,+35000
-G. Sargent,+35000
-B. Snedeker,+35000
-Z. Johnson,+35000
-N. Lashley,+35000
-C. Hadley,+40000
-H. Higgs,+40000
-D. Willett,+40000
-T. Cone,+40000
-L. Griffin,+40000
-J. Dahmen,+40000
-D. Ford,+40000
-B. Valdes,+50000
-B. Silverman,+50000
-P. Peterson,+50000
-H. Buckley,+60000
-P. Kizzire,+60000
-P. Malnati,+75000
-J. Pak,+75000
-N. Goodwin,+75000
-K. Kisner,+10000
-C. Villegas,+10000
-M. Riedel,+10000
-F. Capan III,+15000
-C. Del Solar,+15000
-W. Chandler,+15000
-T. Merritt,+15000
-P. Knowles,+15000
-K. Velo,+15000
-K. Onishi,+15000
-C. Reavie,+15000
-R. Campos,+20000
-H. Endycott,+20000
-A. Baddeley,+25000
-T. Dickson,+25000
-A. Albertson,+25000
-B. Thornberry,+25000
-M. Andersen,+25000
-T. Campbell,+50000
-R. Palmer,+50000
+Matt Fitzpatrick ,2000
+Aaron Rai ,2200
+Ben Griffin ,2500
+Keegan Bradley ,2500
+Jordan Spieth ,3000
+Robert MacIntyre ,3000
+Hideki Matsuyama ,3000
+Si Woo Kim ,3300
+Akshay Bhatia ,3300
+Kurt Kitayama ,4000
+Lucas Glover ,4000
+Jake Knapp ,4000
+Harry Hall ,4000
+Luke Clanton ,4500
+Christiaan Bezuidenhout ,5000
+Rickie Fowler ,5000
+Ryan Gerard ,5000
+Denny McCarthy ,5500
+Cameron Young ,5500
+J.T. Poston ,5500
+Michael Thorbjornsen ,5500
+Nicolai Højgaard ,5500
+Adam Scott ,5500
+Sam Stevens ,5500
+Max Greyserman ,6000
+Sungjae Im ,6000
+Emiliano Grillo ,6500
+Rico Hoey ,6500
+Kevin Yu ,6500
+Bud Cauley ,7000
+Matt Wallace ,7000
+Pierceson Coody ,7000
+Davis Thompson ,7000
+Thorbjørn Olesen ,7000
+Andrew Novak ,7000
+Alex Noren ,7000
+Alex Smalley ,7500
+Jackson Koivun ,7500
+Max Homa ,7500
+Andrew Putnam ,8000
+Keith Mitchell ,8000
+Tom Kim ,8000
+Tony Finau ,8000
+Ryan Fox ,8000
+Michael Kim ,9000
+Takumi Kanaya ,9000
+Jesper Svensson ,9000
+Byeong Hun An ,9000
+Max McGreevy ,10000
+Webb Simpson ,10000
+Chris Kirk ,10000
+Doug Ghim ,10000
+Thomas Detry ,10000
+Nico Echavarria ,10000
+Victor Perez ,10000
