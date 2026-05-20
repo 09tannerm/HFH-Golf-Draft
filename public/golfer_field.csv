@@ -1,156 +1,147 @@
 Golfer,Odds
-Scottie Scheffler ,480
-Rory McIlroy ,850
-Cameron Young ,1200
-Jon Rahm ,1500
-Xander Schauffele ,1600
-Ludvig Åberg ,1800
-Matt Fitzpatrick ,2200
-Bryson DeChambeau ,2200
-Tommy Fleetwood ,2700
-Collin Morikawa ,4000
-Patrick Cantlay ,4000
-Brooks Koepka ,4000
-Min Woo Lee ,4500
-Justin Thomas ,4500
-Nicolai Højgaard ,5000
-Justin Rose ,5500
-Russell Henley ,5500
-Tyrrell Hatton ,5500
-Adam Scott ,6000
-Viktor Hovland ,6000
-Si Woo Kim ,6000
-Sam Burns ,6000
-Chris Gotterup ,6000
-Rickie Fowler ,6000
-J.J. Spaun ,6000
-Patrick Reed ,6500
-Robert MacIntyre ,6500
-Kurt Kitayama ,7000
-Maverick McNealy ,7000
-Jordan Spieth ,8000
-Shane Lowry ,8000
-Sepp Straka ,8000
-Joaquin Niemann ,10000
-Hideki Matsuyama ,10000
-Kristoffer Reitan ,10000
-Harris English ,10000
-Akshay Bhatia ,10000
-Gary Woodland ,10000
-Ben Griffin ,10000
-David Puig ,10000
-Thomas Detry ,10000
-Alex Fitzpatrick ,10000
-Keegan Bradley ,10000
-Jacob Bridgeman ,10000
-Alex Noren ,12500
-Jason Day ,12500
-Alex Smalley ,12500
-Harry Hall ,12500
-Matt McCarty ,15000
-Sungjae Im ,15000
-Corey Conners ,15000
-Sahith Theegala ,17500
-Pierceson Coody ,17500
-Michael Thorbjornsen ,17500
-Aaron Rai ,17500
-Nick Taylor ,17500
-Wyndham Clark ,17500
-Rasmus Højgaard ,17500
-Brian Harman ,17500
-Ryan Gerard ,22500
-Samuel Stevens ,22500
-Keith Mitchell ,22500
-Marco Penge ,22500
-Daniel Berger ,22500
-Sudarshan Yellamaraju ,22500
-Taylor Pendrith ,25000
-Tom McKibbin ,25000
-Ryan Fox ,25000
-Jordan Smith ,25000
-Michael Brennan ,25000
-Ryo Hisatsune ,25000
-Angel Ayora ,25000
-Max Homa ,25000
-Bud Cauley ,25000
-J.T. Poston ,25000
-Jayden Schaper ,35000
-Haotong Li ,35000
-Daniel Hillier ,35000
-Dustin Johnson ,35000
-Aldrich Potgieter ,35000
-Ricky Castillo ,35000
-Christiaan Bezuidenhout ,35000
-Andrew Novak ,35000
-Max Greyserman ,35000
-Michael Kim ,35000
-Matt Wallace ,35000
-Cameron Smith ,35000
-Nico Echavarria ,35000
-Andrew Putnam ,50000
-Rasmus Neergaard-Petersen ,50000
-Bernd Wiesberger ,50000
-Denny McCarthy ,50000
-Stephan Jaeger ,50000
-Richard Hoey ,50000
-Lucas Glover ,50000
-Stewart Cink ,50000
-Billy Horschel ,50000
-Patrick Rodgers ,50000
-Max McGreevy ,50000
-Ian Holt ,50000
-Austin Smotherman ,50000
-Mikael Lindberg ,50000
-Sami Valimaki ,75000
-Chris Kirk ,75000
-Johnny Keefer ,75000
-Casey Jarvis ,75000
-Steven Fisk ,75000
-John Parry ,75000
-Matti Schmid ,75000
-Garrick Higgo ,75000
-Jimmy Walker ,100000
-Braden Shattuck ,100000
-Bryce Fisher ,100000
-Jhonattan Vegas ,100000
-Michael Block ,100000
-Y.E. Yang ,100000
-Luke Donald ,100000
-Ben Kern ,100000
-Elvis Smylie ,100000
-Timothy Wiseman ,100000
-Jared Jones ,100000
-Paul McClure ,100000
-Derek Berg ,100000
-Garrett Sapp ,100000
-Ryan Vermeer ,100000
-Dan Brown ,100000
-Adam Schenk ,100000
-Francisco Bidé ,100000
-Austin Hurt ,100000
-Padraig Harrington ,100000
-Adrien Saddier ,100000
-Emiliano Grillo ,100000
-Martin Kaymer ,100000
-Kota Kaneko ,100000
-Ben Polland ,100000
-Brian Campbell ,100000
-Shaun Micheel ,100000
-Jason Dufner ,100000
-Jordan Gumberg ,100000
-David Lipsky ,100000
-William Mouw ,100000
-Michael Kartrude ,100000
-Joe Highsmith ,100000
-Mark Geddes ,100000
-Davis Riley ,100000
-Tyler Collet ,100000
-Chris Gabriele ,100000
-Andy Sullivan ,100000
-Zach Haynes ,100000
-Travis Smyth ,100000
-Ryan Lenahan ,100000
-Kazuki Higa ,100000
-Chandler Blanchet ,100000
-Jesse Droemer ,100000
-Brandt Snedeker ,100000
+Scottie Scheffler,100
+Si Woo Kim,1000
+Jordan Spieth,1100
+Brooks Koepka,1200
+Keith Mitchell,1300
+Pierceson Coody,1400
+Michael Thorbjornsen,1500
+Ryo Hisatsune,1600
+Wyndham Clark,1700
+Davis Thompson,1800
+Rasmus Hojgaard,1900
+Taylor Pendrith,2000
+Sungjae Im,2100
+Michael Brennan,2200
+Mac Meissner,2300
+Rico Hoey,2400
+Max Greyserman,2500
+Haotong Li,2600
+Tom Kim,2700
+Stephan Jaeger,2800
+Jordan Smith,2900
+Thorbjorn Olesen,3000
+Christiaan Bezuidenhout,3100
+Blades Brown,3200
+Doug Ghim,3300
+Matthias Schmid,3400
+Eric Cole,3500
+Austin Eckroat,3600
+Rasmus Neergaard-Petersen,3700
+Beau Hossler,3800
+Max McGreevy,3900
+Chris Kirk,4000
+Patrick Rodgers,4100
+Adrien Dumont De Chassart,4200
+William Mouw,4300
+Taylor Moore,4400
+Kevin Roy,4500
+John Parry,4600
+Mackenzie Hughes,4700
+Kevin Yu,4800
+John Keefer,4900
+Tony Finau,5000
+Steven Fisk,5100
+Zecheng Dou,5200
+Vince Whaley,5300
+Chad Ramey,5400
+Preston Stout,5500
+Lee Hodges,5600
+Seamus Power,5700
+Jhonattan Vegas,5800
+Kris Ventura,5900
+Karl Vilips,6000
+Daniel Brown,6100
+Mark Hubbard,6200
+Trace Crowe,6300
+Zac Blair,6400
+Garrick Higgo,6500
+Sam Ryder,6600
+Ben Kohles,6700
+Hayden Springer,6800
+Carson Young,6900
+Emiliano Grillo,7000
+Chandler Blanchet,7100
+Adrien Saddier,7200
+Keita Nakajima,7300
+Zach Bauchou,7400
+Pontus Nyholm,7500
+Cameron Champ,7600
+Jimmy Stanger,7700
+Jesper Svensson,7800
+Tom Hoge,7900
+Matt Kuchar,8000
+Adam Svensson,8100
+Billy Horschel,8200
+David Skinns,8300
+A.J. Ewart,8400
+Joel Dahmen,8500
+Erik Van Rooyen,8600
+Jackson Suber,8700
+Patrick Fishburn,8800
+Matthieu Pavon,8900
+Neal Shipley,9000
+Adam Hadwin,9100
+Hank Lebioda,9200
+Takumi Kanaya,9300
+Taylor Montgomery,9400
+Lanto Griffin,9500
+Nick Dunlap,9600
+Chandler Phillips,9700
+Chan Kim,9800
+S.Y. Noh,9900
+John Vanderlaan,10000
+Christo Lamprecht,10100
+Noah Goodwin,10200
+Adam Schenk,10300
+William Sides,10400
+Dylan Wu,10500
+Danny Walker,10600
+Luke Clanton,10700
+Justin Lower,10800
+Paul Peterson,10900
+Joe Highsmith,11000
+Gordon Sargent,11100
+Davis Riley,11200
+Alejandro Tosti,11300
+Kevin Streelman,11400
+Nick Hardy,11500
+Kensei Hirata,11600
+K.H. Lee,11700
+Harry Higgs,11800
+Mason Howell,11900
+Brice Garnett,12000
+Henrik Norlander,12100
+Patton Kizzire,12200
+Ben Silverman,12300
+Martin Laird,12400
+Davis Chatfield,12500
+Cam Davis,12600
+Peter Malnati,12700
+Tyler Duncan,12800
+Will Gordon,12900
+Fabian Gomez,13000
+Charley Hoffman,13100
+Luke List,13200
+Ben Martin,13300
+Jeremy Paul,13400
+Jeffrey Kang,13500
+Camilo Villegas,13600
+Danny Willett,13700
+Aaron Wise,13800
+Yongjun Bae,13900
+Troy Merritt,14000
+Jonathan Byrd,14100
+Jackson Buchanan,14200
+Ryan Brehm,14300
+Marcelo Rozo,14400
+Rafael Campos,14500
+Greg Gregory,14600
+Scott Piercy,14700
+Adam Headley,14800
+James Hahn,14900
+Alex Huang,15000
+Ryan Palmer,15100
+Robert Streb,15200
+Nathan Petronzio,15300
+Austin Cook,15400
