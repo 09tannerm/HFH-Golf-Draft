@@ -1,73 +1,140 @@
 Golfer,Odds
-Scottie Scheffler ,300
-Rory McIlroy ,1000
-Cameron Young ,1600
-Xander Schauffele ,1800
-Ludvig Åberg ,1800
-Matt Fitzpatrick ,2200
-Si Woo Kim ,2200
-Russell Henley ,3000
-Tommy Fleetwood ,3000
-Patrick Cantlay ,3000
-Ben Griffin ,3300
-Robert MacIntyre ,4000
-Sam Burns ,4000
-Min Woo Lee ,4000
-Rickie Fowler ,4500
-Justin Thomas ,4500
-Hideki Matsuyama ,4500
-Maverick McNealy ,5000
-Jordan Spieth ,5500
-J.J. Spaun ,5500
-Chris Gotterup ,6000
-Harris English ,6000
-Adam Scott ,6000
-Nicolai Højgaard ,6000
-Jake Knapp ,6500
-Alex Smalley ,6500
-Justin Rose ,6500
-Kurt Kitayama ,6500
-Sepp Straka ,7000
-Shane Lowry ,8000
-Jason Day ,8000
-Aaron Rai ,8000
-Akshay Bhatia ,8000
-Wyndham Clark ,8000
-Sahith Theegala ,10000
-Keegan Bradley ,10000
-Jacob Bridgeman ,10000
-Harry Hall ,10000
-Kristoffer Reitan ,10000
-Alex Noren ,10000
-Gary Woodland ,10000
-Corey Conners ,10000
-Pierceson Coody ,10000
-Ryo Hisatsune ,10000
-Samuel Stevens ,10000
-J.T. Poston ,10000
-Nick Taylor ,10000
-Mac Meissner ,12500
-Sungjae Im ,12500
-Daniel Berger ,12500
-Ryan Gerard ,12500
-Brian Harman ,15000
-Ryan Fox ,15000
-Bud Cauley ,15000
-Alex Fitzpatrick ,15000
-Eric Cole ,15000
-Denny McCarthy ,15000
-Tony Finau ,17500
-Taylor Pendrith ,17500
-Michael Kim ,17500
-Andrew Novak ,17500
-Matt McCarty ,17500
-Patrick Rodgers ,22500
-Billy Horschel ,35000
-Nico Echavarria ,35000
-Lucas Glover ,50000
-Jhonattan Vegas ,50000
-Tom Hoge ,50000
-Brandt Snedeker ,50000
-Matt Kuchar ,75000
-Mark Hubbard ,100000
-Brian Campbell ,100000
+Matt Fitzpatrick ,1175
+Tommy Fleetwood ,1250
+Sam Burns ,1275
+Collin Morikawa ,2250
+Robert MacIntyre ,2400
+Justin Rose ,2700
+Wyndham Clark ,2700
+Nicolai Hojgaard ,2900
+Viktor Hovland ,2900
+Shane Lowry ,2900
+Brooks Koepka ,3100
+Kristoffer Reitan ,3300
+Michael Thorbjornsen ,3400
+Keith Mitchell ,3500
+Alex Noren ,3600
+Jacob Bridgeman ,3700
+Harry Hall ,3700
+Ryan Fox ,4600
+Nick Taylor ,4800
+Aaron Rai ,4800
+Sahith Theegala ,4800
+Alex Fitzpatrick ,4900
+Taylor Pendrith ,5300
+Eric Cole ,5400
+Bud Cauley ,5600
+Michael Brennan ,5700
+J.T. Poston ,5800
+Rico Hoey ,6400
+Corey Conners ,6500
+Davis Thompson ,6600
+Sudarshan Yellamaraju ,6700
+Jordan Smith ,6800
+Stephan Jaeger ,7200
+Mac Meissner ,7400
+Max Greyserman ,7600
+Tony Finau ,7600
+Matt Wallace ,7800
+Thorbjorn Olesen ,8000
+Max Homa ,8200
+Haotong Li ,8400
+Doug Ghim ,8400
+Christiaan Bezuidenhout ,8600
+Steven Fisk ,8800
+Ricky Castillo ,8800
+Tom Kim ,9200
+John Keefer ,9400
+Rasmus Neergaard-Petersen ,9600
+Aldrich Potgieter ,9800
+Kevin Yu ,9800
+Denny McCarthy ,9800
+Taylor Moore ,10500
+Andrew Putnam ,10500
+Matthias Schmid ,11000
+Max McGreevy ,11500
+Adrien Dumont De Chassart ,12000
+Mackenzie Hughes ,12000
+Beau Hossler ,12500
+Austin Smotherman ,13000
+Austin Eckroat ,14000
+Chris Kirk ,14500
+Seamus Power ,15000
+Lee Hodges ,15500
+Kris Ventura ,15500
+Jesper Svensson ,15500
+Garrick Higgo ,15500
+Zach Bauchou ,15500
+William Mouw ,15500
+John Parry ,16000
+Chad Ramey ,16000
+Jackson Suber ,18000
+Zecheng Dou ,18000
+Billy Horschel ,18000
+Kevin Roy ,18500
+A.J. Ewart ,19500
+Sam Ryder ,19500
+Keita Nakajima ,20000
+Vince Whaley ,20000
+Daniel Brown ,20000
+Emiliano Grillo ,21000
+Karl Vilips ,22500
+Neal Shipley ,24000
+Lucas Glover ,24000
+Benjamin James ,24000
+Patrick Fishburn ,25000
+Chandler Blanchet ,25000
+Mark Hubbard ,26000
+Trace Crowe ,26000
+Matthieu Pavon ,27000
+Luke Clanton ,27000
+Tom Hoge ,29000
+Brandt Snedeker ,30000
+Jhonattan Vegas ,31000
+Adam Svensson ,32000
+Takumi Kanaya ,36000
+Pontus Nyholm ,36000
+John Vanderlaan ,37500
+Adam Hadwin ,38000
+Erik Van Rooyen ,38000
+Lanto Griffin ,39000
+Joel Dahmen ,40000
+David Lipsky ,41000
+Paul Waring ,41000
+Jimmy Stanger ,47500
+Joey Savoie ,47500
+Hank Lebioda ,48000
+Dylan Wu ,48000
+Nick Dunlap ,52500
+Ben Silverman ,52500
+Christo Lamprecht ,55000
+Roger Sloan ,55000
+Chandler Phillips ,57500
+Kensei Hirata ,62500
+Justin Lower ,62500
+Danny Walker ,62500
+Adam Schenk ,75000
+Matthew Anderson ,75000
+Alejandro Tosti ,85000
+Joe Highsmith ,95000
+Jeffrey Kang ,97500
+Davis Chatfield ,97500
+Davis Riley ,100000
+Brice Garnett ,100000
+Peter Malnati ,100000
+Danny Willett ,110000
+Cam Davis ,110000
+Padraig Harrington ,115000
+Charley Hoffman ,120000
+Brian Campbell ,135000
+Patton Kizzire ,150000
+Justin Matthews ,150000
+Marcelo Rozo ,180000
+Drew Nesbitt ,190000
+Declan O’Donovan ,200000
+Ashton McCulloch ,225000
+Sean O’Hair ,275000
+Mike Weir ,300000
+Rafael Campos ,325000
+Calen Sanderson ,350000
+Yohann Benson ,500000
